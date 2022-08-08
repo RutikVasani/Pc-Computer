@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/pages/details.dart';
+import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
-import 'package:pc1/pages/engineerpage/engineerpage.dart';
-import 'package:pc1/pages/newcust/newcust.dart';
+import 'package:pc1/pages/homepage/engineerpage/engineerpage.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class AppBarPage extends StatefulWidget {
 class _AppBarPageState extends State<AppBarPage> {
   int pageIndex = 0;
 
-  final pages = [const HomePage(), const DetailsPage()];
+  final pages = [const HomePage(), ProgressPage()];
 
   @override
   Widget build(BuildContext context) {

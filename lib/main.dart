@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pc1/appbarpage.dart';
-import 'package:pc1/pages/details.dart';
+import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
 
 import 'utils/routes.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           MyRoutes.appbarpage: (context) => const AppBarPage(),
           MyRoutes.homepage: (context) => const HomePage(),
-          MyRoutes.detailspage:(context) => const DetailsPage()
+          MyRoutes.detailspage:(context) => ProgressPage()
         },
         home: const AppBarPage());
   }
