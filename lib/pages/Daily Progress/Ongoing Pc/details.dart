@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Scaffold ProgressPage() {
+Scaffold OnGoingPcDatails() {
   return Scaffold(
     backgroundColor: const Color.fromARGB(255, 234, 246, 247),
     body: ListView.builder(
@@ -33,31 +33,19 @@ List<Choice> choices = const <Choice>[
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'Delivered',
-      charge: '₹ 3000'),
-  Choice(
-      device: 'Printer',
-      problem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'Repaired',
-      charge: '₹ 400'),
-  Choice(
-      device: 'Computer',
-      problem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text.',
       progress: 'On Going',
-      charge: '₹ 500'),
+      charge: '₹ 3000'),
   Choice(
       device: 'Scanner',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'Penddind',
+      progress: 'On Going',
       charge: '₹ 300'),
   Choice(
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'Pendding',
+      progress: 'On Going',
       charge: '₹ 500'),
 ];
 
