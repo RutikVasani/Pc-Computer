@@ -28,8 +28,6 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
                   decoration: const BoxDecoration(
                       gradient: RadialGradient(
                         radius: 2,
@@ -84,7 +82,6 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
@@ -166,8 +163,7 @@ class HomePage extends StatelessWidget {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const TodayAllPcPage()));
                           },
                           child: Container(
-                            height: 250,
-                            width: 180,
+                            width: MediaQuery.of(context).size.width/2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -187,7 +183,7 @@ class HomePage extends StatelessWidget {
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.asset(
                                   "assets/images/computer.png",
-                                  height: 115,
+                                  height: MediaQuery.of(context).size.height*.15
                                 ),
                               ),
                               Padding(
@@ -246,7 +242,7 @@ class HomePage extends StatelessWidget {
                           },
                           child: Container(
                             height: 150,
-                            width: 180,
+                            width: MediaQuery.of(context).size.width/2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -268,7 +264,7 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     Image.asset(
                                       "assets/images/ongoing.png",
-                                      height: 75,
+                                      height: MediaQuery.of(context).size.height*.075
                                     ),
                                     Column(
                                       children: [
@@ -300,7 +296,7 @@ class HomePage extends StatelessWidget {
                                   child: Text(
                                     "Ongoing Pc",
                                     style: GoogleFonts.ubuntu(
-                                      fontSize: 25,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -312,7 +308,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 15),
                     Column(
                       children: [
                         InkWell(
@@ -321,7 +317,7 @@ class HomePage extends StatelessWidget {
                           },
                           child: Container(
                             height: 150,
-                            width: 180,
+                            width: MediaQuery.of(context).size.width/2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -343,7 +339,7 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     Image.asset(
                                       "assets/images/tick.png",
-                                      height: 70,
+                                      height: MediaQuery.of(context).size.height*.07
                                     ),
                                     Column(
                                       children: [
@@ -356,7 +352,7 @@ class HomePage extends StatelessWidget {
                                             child: Text(
                                               "Task: $repaired",
                                               style: GoogleFonts.ubuntu(
-                                                fontSize: 18,
+                                                fontSize: 15,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -394,8 +390,7 @@ class HomePage extends StatelessWidget {
                             )));
                           },
                           child: Container(
-                            height: 250,
-                            width: 180,
+                            width: MediaQuery.of(context).size.width/2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -415,7 +410,7 @@ class HomePage extends StatelessWidget {
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.asset(
                                   "assets/images/delivered.png",
-                                  height: 115,
+                                  height: MediaQuery.of(context).size.height*.15
                                 ),
                               ),
                               Padding(
