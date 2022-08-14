@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
 import 'package:pc1/pages/homepage/engineerpage/engineerpage.dart';
+import 'package:pc1/pages/new_cust/newcust.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -34,6 +36,16 @@ class _AppBarPageState extends State<AppBarPage> {
             onPressed: () {},
           ),
           IconButton(
+            icon: const Icon(
+              Icons.add,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const NewCust()));
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.engineering),
             onPressed: () {
               Navigator.push(
@@ -44,20 +56,17 @@ class _AppBarPageState extends State<AppBarPage> {
           ),
         ],
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: IconButton(
-            icon: const Icon(
-              Icons.home,
-              size: 30,
-            ),
-            onPressed: () {
+          padding: const EdgeInsets.only(left: 10, top: 12, bottom: 12),
+          child: InkWell(
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AppBarPage(),
+                  builder: (context) => HomePage(),
                 ),
               );
             },
+            child: Image.asset("assets/images/home.png"),
           ),
         ),
       ),
@@ -75,44 +84,43 @@ class _AppBarPageState extends State<AppBarPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            enableFeedback: false,
+          TextButton(
             onPressed: () {
               setState(() {
                 pageIndex = 0;
               });
             },
-            icon: pageIndex == 0
-                ? const Icon(
-                    Icons.home,
-                    color: Colors.white,
-                    size: 35,
+            child: pageIndex == 0
+                ? Row(
+                    children: [
+                      Image.asset("assets/images/home.png", height: 25),
+                      SizedBox(width: 7),
+                      Text(
+                        "Home",
+                        style: GoogleFonts.poppins(
+                            fontSize: 22, color: Colors.white),
+                      ),
+                    ],
                   )
-                : const Icon(
-                    Icons.home_outlined,
-                    color: Colors.white,
-                    size: 35,
-                  ),
+                : Image.asset("assets/images/home1.png", height: 25),
           ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 1;
-              });
-            },
-            icon: pageIndex == 1
-                ? const Icon(
-                    Icons.work_rounded,
-                    color: Colors.white,
-                    size: 35,
-                  )
-                : const Icon(
-                    Icons.work_outline_outlined,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-          ),
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  pageIndex = 1;
+                });
+              },
+              child: pageIndex == 1
+                  ? Row(
+                      children: [
+                        Image.asset("assets/images/menu.png", height: 25),
+                        SizedBox(width: 7),
+                        Text("Menu",
+                            style: GoogleFonts.poppins(
+                                fontSize: 22, color: Colors.white))
+                      ],
+                    )
+                  : Image.asset("assets/images/menu1.png", height: 25)),
         ],
       ),
     );
