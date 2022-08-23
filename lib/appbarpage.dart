@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
 import 'package:pc1/pages/homepage/engineerpage/engineerpage.dart';
-import 'package:pc1/pages/new_cust/newcust.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:pc1/pages/new_cust/newcustform.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -17,6 +16,8 @@ class _AppBarPageState extends State<AppBarPage> {
   int pageIndex = 0;
 
   final pages = [const HomePage(), ProgressPage()];
+  TextEditingController NameController = TextEditingController();
+  TextEditingController MobileNoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +42,62 @@ class _AppBarPageState extends State<AppBarPage> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const NewCust()));
+              showDialog(
+                  barrierColor: Color.fromARGB(130, 144, 202, 249),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      scrollable: true,
+                      title: Text('New Member'),
+                      content: Column(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: TextField(
+                              controller: NameController,
+                              decoration: const InputDecoration(
+                                labelText: 'Name',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                prefixIcon: Icon(Icons.person),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 14),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: TextField(
+                              controller: MobileNoController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Mobile No.',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  prefixIcon: Icon(Icons.call)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              child: Text("Submit"),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NewCustFormPage(Name: NameController.text, MobileNo: MobileNoController.text,),
+                                  ),
+                                );
+                              }),
+                        )
+                      ],
+                    );
+                  });
             },
           ),
           IconButton(

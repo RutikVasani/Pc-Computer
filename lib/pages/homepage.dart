@@ -118,6 +118,14 @@ class HomePage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DeliveredPcPage(),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     "View all",
                                     style: GoogleFonts.ubuntu(
@@ -160,10 +168,14 @@ class HomePage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const TodayAllPcPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TodayAllPcPage()));
                           },
                           child: Container(
-                            width: MediaQuery.of(context).size.width/2.3,
+                            width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -181,10 +193,9 @@ class HomePage extends StatelessWidget {
                               const SizedBox(height: 15),
                               Padding(
                                 padding: const EdgeInsets.all(3.0),
-                                child: Image.asset(
-                                  "assets/images/computer.png",
-                                  height: MediaQuery.of(context).size.height*.15
-                                ),
+                                child: Image.asset("assets/images/computer.png",
+                                    height: MediaQuery.of(context).size.height *
+                                        .15),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -238,11 +249,15 @@ class HomePage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const OngoingPcPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OngoingPcPage()));
                           },
                           child: Container(
                             height: 150,
-                            width: MediaQuery.of(context).size.width/2.3,
+                            width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -262,10 +277,10 @@ class HomePage extends StatelessWidget {
                                     left: 10, top: 8, right: 10),
                                 child: Row(
                                   children: [
-                                    Image.asset(
-                                      "assets/images/ongoing.png",
-                                      height: MediaQuery.of(context).size.height*.075
-                                    ),
+                                    Image.asset("assets/images/ongoing.png",
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .075),
                                     Column(
                                       children: [
                                         const SizedBox(height: 40),
@@ -313,11 +328,15 @@ class HomePage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const RepairedPcPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RepairedPcPage()));
                           },
                           child: Container(
                             height: 150,
-                            width: MediaQuery.of(context).size.width/2.3,
+                            width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -337,10 +356,10 @@ class HomePage extends StatelessWidget {
                                     left: 10, top: 8, right: 10),
                                 child: Row(
                                   children: [
-                                    Image.asset(
-                                      "assets/images/tick.png",
-                                      height: MediaQuery.of(context).size.height*.07
-                                    ),
+                                    Image.asset("assets/images/tick.png",
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .07),
                                     Column(
                                       children: [
                                         const SizedBox(height: 40),
@@ -386,11 +405,14 @@ class HomePage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DeliveredPcPage(
-                            )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DeliveredPcPage()));
                           },
                           child: Container(
-                            width: MediaQuery.of(context).size.width/2.3,
+                            width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -409,9 +431,9 @@ class HomePage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.asset(
-                                  "assets/images/delivered.png",
-                                  height: MediaQuery.of(context).size.height*.15
-                                ),
+                                    "assets/images/delivered.png",
+                                    height: MediaQuery.of(context).size.height *
+                                        .15),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
