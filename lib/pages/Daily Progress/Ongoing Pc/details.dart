@@ -17,35 +17,35 @@ Scaffold OnGoingPcDatails() {
 
 class Choice {
   const Choice({
+    required this.pcNumber,
     required this.charge,
     required this.device,
     required this.problem,
-    required this.progress,
   });
+  final String pcNumber;
   final String device;
   final String problem;
-  final String progress;
   final String charge;
 }
 
 List<Choice> choices = const <Choice>[
   Choice(
+      pcNumber: '5050',
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'On Going',
       charge: '₹ 3000'),
   Choice(
+      pcNumber: '5050',
       device: 'Scanner',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'On Going',
       charge: '₹ 300'),
   Choice(
+      pcNumber: '5050',
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      progress: 'On Going',
       charge: '₹ 500'),
 ];
 
@@ -63,6 +63,7 @@ class SelectCard extends StatefulWidget {
 class _SelectCardState extends State<SelectCard> {
   @override
   Widget build(BuildContext context) {
+    var dropdownvalue = 'On Going';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
@@ -76,12 +77,24 @@ class _SelectCardState extends State<SelectCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
-                      widget.choice.device,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.choice.device,
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(width: 30),
+                        Text(
+                          widget.choice.pcNumber,
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                      ],
                     ),
                   ),
                   Spacer(),
@@ -127,12 +140,32 @@ class _SelectCardState extends State<SelectCard> {
                               topLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10))),
                       child: Center(
-                        child: Text(
-                          widget.choice.progress,
-                          style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+                        child: DropdownButton(
+                          value: dropdownvalue,
+                          style: GoogleFonts.poppins(color: Colors.white),
+                          dropdownColor:
+                              const Color.fromARGB(255, 16, 121, 174),
+                          underline: const SizedBox(),
+                          iconSize: 0,
+                          items: const [
+                            DropdownMenuItem(
+                              value: "On Going",
+                              child: Text("On Going"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Repaired",
+                              child: Text("Repaired"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Delivereed",
+                              child: Text("Delivered"),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              dropdownvalue = value.toString();
+                            });
+                          },
                         ),
                       ),
                     ),

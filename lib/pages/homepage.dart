@@ -122,7 +122,8 @@ class HomePage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => DeliveredPcPage(),
+                                        builder: (context) =>
+                                            const DeliveredPcPage(),
                                       ),
                                     );
                                   },
@@ -190,7 +191,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             child: Column(children: [
-                              const SizedBox(height: 15),
+                              const SizedBox(height: 10),
                               Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.asset("assets/images/computer.png",
@@ -241,11 +242,12 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 10),
                             ]),
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         InkWell(
                           onTap: () {
@@ -256,7 +258,6 @@ class HomePage extends StatelessWidget {
                                         const OngoingPcPage()));
                           },
                           child: Container(
-                            height: 150,
                             width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
@@ -318,6 +319,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 15),
                             ]),
                           ),
                         ),
@@ -335,7 +337,6 @@ class HomePage extends StatelessWidget {
                                         const RepairedPcPage()));
                           },
                           child: Container(
-                            height: 150,
                             width: MediaQuery.of(context).size.width / 2.3,
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
@@ -397,11 +398,12 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 15),
                             ]),
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         InkWell(
                           onTap: () {
@@ -464,6 +466,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 10),
                             ]),
                           ),
                         )

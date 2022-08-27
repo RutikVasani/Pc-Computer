@@ -10,6 +10,6 @@ class MyRoutes {
   static String donepage = "/donepage";
   static String paymentpage = "/paymentpage";
   static String totalcollectionpage = "/totalcollection";
-  static String pendingpage = "/pendingpage";
+  static String Pendingpage = "/Pendingpage";
   static String detailspage = "/detailspage";
 }

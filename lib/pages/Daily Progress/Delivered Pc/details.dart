@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/pages/invoice/invoice.dart';
 
 Scaffold DeliveredPcDatails() {
   return Scaffold(
@@ -17,11 +18,13 @@ Scaffold DeliveredPcDatails() {
 
 class Choice {
   const Choice({
+    required this.pcNumber,
     required this.charge,
     required this.device,
     required this.problem,
     required this.progress,
   });
+  final String pcNumber;
   final String device;
   final String problem;
   final String progress;
@@ -30,18 +33,21 @@ class Choice {
 
 List<Choice> choices = const <Choice>[
   Choice(
+      pcNumber: '5050',
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
       progress: 'Delivered',
       charge: '₹ 3000'),
   Choice(
+      pcNumber: '5050',
       device: 'Scanner',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
       progress: 'Delivered',
       charge: '₹ 300'),
   Choice(
+      pcNumber: '5050',
       device: 'Laptop',
       problem:
           'Contrary to popular belief, Lorem Ipsum is not simply random text.',
@@ -76,12 +82,24 @@ class _SelectCardState extends State<SelectCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Text(
-                      widget.choice.device,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.choice.device,
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(width: 30),
+                        Text(
+                          widget.choice.pcNumber,
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                      ],
                     ),
                   ),
                   Spacer(),
@@ -118,21 +136,31 @@ class _SelectCardState extends State<SelectCard> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.purple.shade200,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                      child: Center(
-                        child: Text(
-                          widget.choice.progress,
-                          style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const InvoicePage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.purple.shade200,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                        child: Center(
+                          child: Text(
+                            widget.choice.progress,
+                            style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
                         ),
                       ),
                     ),

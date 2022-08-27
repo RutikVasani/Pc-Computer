@@ -50,7 +50,7 @@ class _AppBarPageState extends State<AppBarPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       scrollable: true,
-                      title: Text('New Member'),
+                      title: Text('New Customer'),
                       content: Column(
                         children: <Widget>[
                           Container(
