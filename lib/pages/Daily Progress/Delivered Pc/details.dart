@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/pages/invoice/invoice.dart';
+import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 
 Scaffold DeliveredPcDatails() {
   return Scaffold(
@@ -102,7 +102,7 @@ class _SelectCardState extends State<SelectCard> {
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: Text(
@@ -129,7 +129,7 @@ class _SelectCardState extends State<SelectCard> {
                           style: GoogleFonts.poppins(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 101, 85, 85)),
+                              color: const Color.fromARGB(255, 101, 85, 85)),
                         ),
                       ),
                     ),
@@ -141,7 +141,7 @@ class _SelectCardState extends State<SelectCard> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const InvoicePage(),
+                            builder: (context) => const PdfDataPage(),
                           ),
                         );
                       },
@@ -150,9 +150,9 @@ class _SelectCardState extends State<SelectCard> {
                         height: 40,
                         decoration: BoxDecoration(
                             color: Colors.purple.shade200,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
+                                bottomRight: const Radius.circular(10))),
                         child: Center(
                           child: Text(
                             widget.choice.progress,
