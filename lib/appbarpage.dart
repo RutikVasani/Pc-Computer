@@ -90,7 +90,10 @@ class _AppBarPageState extends State<AppBarPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NewCustFormPage(Name: NameController.text, MobileNo: MobileNoController.text,),
+                                    builder: (context) => NewCustFormPage(
+                                      Name: NameController.text,
+                                      MobileNo: MobileNoController.text,
+                                    ),
                                   ),
                                 );
                               }),
@@ -114,11 +117,11 @@ class _AppBarPageState extends State<AppBarPage> {
           padding: const EdgeInsets.only(left: 10, top: 12, bottom: 12),
           child: InkWell(
             onTap: () {
-              Navigator.push(
+              Navigator.pushAndRemoveUntil<void>(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
+                MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const AppBarPage()),
+                ModalRoute.withName('/'),
               );
             },
             child: Image.asset("assets/images/home.png"),

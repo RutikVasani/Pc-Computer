@@ -4,7 +4,7 @@ import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 
 Scaffold DeliveredPcDatails() {
   return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 234, 246, 247),
+    backgroundColor: const Color.fromARGB(255, 211, 244, 247),
     body: ListView.builder(
       itemCount: choices.length,
       itemBuilder: (context, index) =>
@@ -18,12 +18,14 @@ Scaffold DeliveredPcDatails() {
 
 class Choice {
   const Choice({
+    required this.billNo,
     required this.pcNumber,
     required this.charge,
     required this.device,
     required this.problem,
     required this.progress,
   });
+  final String billNo;
   final String pcNumber;
   final String device;
   final String problem;
@@ -33,6 +35,7 @@ class Choice {
 
 List<Choice> choices = const <Choice>[
   Choice(
+      billNo: '543',
       pcNumber: '5050',
       device: 'Laptop',
       problem:
@@ -40,6 +43,7 @@ List<Choice> choices = const <Choice>[
       progress: 'Delivered',
       charge: '₹ 3000'),
   Choice(
+      billNo: '544',
       pcNumber: '5050',
       device: 'Scanner',
       problem:
@@ -47,6 +51,7 @@ List<Choice> choices = const <Choice>[
       progress: 'Delivered',
       charge: '₹ 300'),
   Choice(
+      billNo: '545',
       pcNumber: '5050',
       device: 'Laptop',
       problem:
@@ -77,6 +82,66 @@ class _SelectCardState extends State<SelectCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Container(
+                decoration: const BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        width: 200,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            'Bill No: ${widget.choice.billNo}',
+                            style: GoogleFonts.ubuntu(
+                                fontSize: 27,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PdfDataPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.purple.shade200,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10))),
+                            child: Center(
+                              child: Text(
+                                widget.choice.progress,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
               Row(
                 children: [
                   Padding(
@@ -115,58 +180,74 @@ class _SelectCardState extends State<SelectCard> {
                   ),
                 ],
               ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.1,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    widget.choice.problem,
+                    style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey),
+                  ),
+                ),
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.65,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          widget.choice.problem,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.choice.device,
                           style: GoogleFonts.poppins(
-                              fontSize: 13,
+                              fontSize: 20,
                               fontWeight: FontWeight.w600,
-                              color: const Color.fromARGB(255, 101, 85, 85)),
+                              color: Colors.black),
                         ),
-                      ),
+                        const SizedBox(width: 30),
+                        Text(
+                          widget.choice.pcNumber,
+                          style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                      ],
                     ),
                   ),
+                  const Spacer(),
                   Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PdfDataPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.purple.shade200,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomRight: const Radius.circular(10))),
-                        child: Center(
-                          child: Text(
-                            widget.choice.progress,
-                            style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                    padding: const EdgeInsets.only(right: 15),
+                    child: Text(
+                      widget.choice.charge,
+                      style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
                     ),
-                  )
+                  ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      widget.choice.problem,
+                      style: GoogleFonts.poppins(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           )),
     );

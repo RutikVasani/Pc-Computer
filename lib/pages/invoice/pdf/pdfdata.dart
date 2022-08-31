@@ -138,10 +138,21 @@ class _PdfDataPage extends State<PdfDataPage> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.40,
+                            width: MediaQuery.of(context).size.width * 0.20,
                             height: 30,
                             child: Text(
                               "Item",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.20,
+                            height: 30,
+                            child: Text(
+                              "Pc No",
                               style: GoogleFonts.poppins(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -178,10 +189,19 @@ class _PdfDataPage extends State<PdfDataPage> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.40,
+                            width: MediaQuery.of(context).size.width * 0.20,
                             height: 25,
                             child: Text(
                               "Laptop",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13, color: Colors.grey),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.20,
+                            height: 25,
+                            child: Text(
+                              "5050",
                               style: GoogleFonts.poppins(
                                   fontSize: 13, color: Colors.grey),
                             ),
@@ -207,41 +227,42 @@ class _PdfDataPage extends State<PdfDataPage> {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Divider(
-                        thickness: 1,
-                        color: Color.fromARGB(255, 16, 121, 174),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            height: 30,
+                            width: MediaQuery.of(context).size.width * 0.20,
+                            height: 25,
                             child: Text(
-                              "Problem",
+                              "Printer",
                               style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                  fontSize: 13, color: Colors.grey),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            height: 120,
+                            width: MediaQuery.of(context).size.width * 0.20,
+                            height: 25,
                             child: Text(
-                              "Contrary to popular belief, Lorem Ipsum is not simply random text.",
-                              textAlign: TextAlign.justify,
+                              "5051",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13, color: Colors.grey),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.20,
+                            height: 25,
+                            child: Text(
+                              "500",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13, color: Colors.grey),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            height: 25,
+                            child: Text(
+                              "500",
                               style: GoogleFonts.poppins(
                                   fontSize: 13, color: Colors.grey),
                             ),
@@ -279,7 +300,7 @@ class _PdfDataPage extends State<PdfDataPage> {
                             width: MediaQuery.of(context).size.width * 0.25,
                             height: 30,
                             child: Text(
-                              "3000",
+                              "3500",
                               style: GoogleFonts.poppins(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
