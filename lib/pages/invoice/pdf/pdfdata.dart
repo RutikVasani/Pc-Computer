@@ -49,14 +49,14 @@ class _PdfDataPage extends State<PdfDataPage> {
                             "RECIPIENT",
                             style: GoogleFonts.poppins(
                                 fontSize: 20,
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w300),
                           ),
                           Text(
                             "Invoice",
                             style: GoogleFonts.ubuntu(
                                 fontSize: 25,
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],

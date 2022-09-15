@@ -110,8 +110,8 @@ class _SelectCardState extends State<SelectCard> {
                           decoration: BoxDecoration(
                               color: Colors.blue.shade200,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10))),
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10))),
                           child: Center(
                             child: DropdownButton(
                               value: dropdownvalue,
@@ -262,4 +262,3 @@ class _SelectCardState extends State<SelectCard> {
     );
   }
 }
-

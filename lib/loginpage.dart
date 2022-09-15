@@ -1,9 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late String _userid;
+  late String _password;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +22,7 @@ class LoginPage extends StatelessWidget {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              stops: [
+              stops: const [
             0.2,
             0.5,
             0.8,
@@ -51,7 +61,6 @@ class LoginPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
-                        keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: 'User Id',
                           labelStyle: TextStyle(
@@ -69,28 +78,48 @@ class LoginPage extends StatelessWidget {
                             color: Color.fromARGB(255, 16, 121, 174),
                           ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _userid = value;
+                          });
+                        },
                       ),
                       TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                        obscureText: _isObscure,
+                        decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                               color: Color.fromARGB(255, 16, 121, 174)),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 30, 63, 90)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: Color.fromARGB(255, 16, 121, 174),
                           ),
-                          suffixIcon: Icon(Icons.remove_red_eye),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off, color: const Color.fromARGB(255, 16, 121, 174),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                          ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -118,10 +147,21 @@ class LoginPage extends StatelessWidget {
                         ),
                         child: MaterialButton(
                           // ignore: avoid_print
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const AppBarPage())),
+                          onPressed: () {
+                            FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                                    email: _userid, password: _password)
+                                .then((FirebaseAuth) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AppBarPage(),
+                                ),
+                              );
+                            }).catchError((e) {
+                              print(e);
+                            });
+                          },
                           color: const Color.fromARGB(255, 16, 121, 174),
                           child: const Text(
                             'LOGIN',

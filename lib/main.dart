@@ -4,9 +4,11 @@ import 'package:pc1/loginpage.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
 import 'utils/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

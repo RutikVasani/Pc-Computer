@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "362738188855",
+    "project_id": "pc-computer-1ac53",
+    "storage_bucket": "pc-computer-1ac53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362738188855:android:a04bfccd4afb9e7ba1f5b2",
+        "android_client_info": {
+          "package_name": "com.pccomputer.pc1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362738188855-nltjtbnag432740bjpsvs9kslut0rref.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3tf04W_uu0uxMcVD4OwhW3YcAweYr6TQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362738188855-nltjtbnag432740bjpsvs9kslut0rref.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
