@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/pages/Daily%20Progress/Today%20All/datails.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
 
 class NewCustFormPage extends StatefulWidget {
   var MobileNo;
   var Name;
+  var itemNumber;
 
-  NewCustFormPage({Key? key, this.Name, this.MobileNo}) : super(key: key);
+  NewCustFormPage({Key? key, this.Name, this.MobileNo, this.itemNumber})
+      : super(key: key);
 
   @override
   State<NewCustFormPage> createState() => _NewCustFormPageState();
@@ -178,6 +179,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: InkWell(
                         onTap: () {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -18,6 +18,7 @@ class _AppBarPageState extends State<AppBarPage> {
   final pages = [const HomePage(), ProgressPage()];
   TextEditingController NameController = TextEditingController();
   TextEditingController MobileNoController = TextEditingController();
+  TextEditingController ItemController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +80,20 @@ class _AppBarPageState extends State<AppBarPage> {
                                   prefixIcon: Icon(Icons.call)),
                             ),
                           ),
+                          SizedBox(height: 14),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: TextField(
+                              controller: ItemController,
+                              decoration: const InputDecoration(
+                                labelText: 'Item Number.',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                prefixIcon: Icon(Icons.computer_outlined),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       actions: [
@@ -87,12 +102,14 @@ class _AppBarPageState extends State<AppBarPage> {
                           child: ElevatedButton(
                               child: Text("Submit"),
                               onPressed: () {
+                                Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => NewCustFormPage(
                                       Name: NameController.text,
                                       MobileNo: MobileNoController.text,
+                                      itemNumber: ItemController,
                                     ),
                                   ),
                                 );
