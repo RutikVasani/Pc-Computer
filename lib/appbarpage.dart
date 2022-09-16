@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/loginpage.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/homepage.dart';
 import 'package:pc1/pages/homepage/engineerpage/engineerpage.dart';
@@ -132,16 +134,22 @@ class _AppBarPageState extends State<AppBarPage> {
         ],
         leading: Padding(
           padding: const EdgeInsets.only(left: 10, top: 12, bottom: 12),
-          child: InkWell(
-            onTap: () {
-              Navigator.pushAndRemoveUntil<void>(
+          child: IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              Navigator.push(
                 context,
-                MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const AppBarPage()),
-                ModalRoute.withName('/'),
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
               );
             },
-            child: Image.asset("assets/images/home.png"),
           ),
         ),
       ),

@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return _loading
         ? Scaffold(
             backgroundColor: Colors.white,
-            body: Center(child: Image.asset("assets/images/computer1.webp")),
+            body: Center(child: Image.asset("assets/images/loading.gif")),
           )
         : Container(
             decoration: BoxDecoration(
