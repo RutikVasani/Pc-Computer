@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
+import 'package:pc1/forgotpassword.dart';
 import 'package:pc1/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -140,7 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 TextButton(
                                   onPressed: () {
-                                    print('Forgotted Password!');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ForgotpasswordPage(),
+                                      ),
+                                    );
                                   },
                                   child: Text(
                                     'Forgot Password?',

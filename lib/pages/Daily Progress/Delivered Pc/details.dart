@@ -18,14 +18,12 @@ Scaffold DeliveredPcDatails() {
 
 class Choice {
   const Choice({
-    required this.billNo,
     required this.pcNumber,
     required this.charge,
     required this.device,
     required this.problem,
     required this.progress,
   });
-  final String billNo;
   final String pcNumber;
   final String device;
   final String problem;
@@ -35,7 +33,6 @@ class Choice {
 
 List<Choice> choices = const <Choice>[
   Choice(
-      billNo: '543',
       pcNumber: '5050',
       device: 'Laptop',
       problem:
@@ -43,7 +40,6 @@ List<Choice> choices = const <Choice>[
       progress: 'Delivered',
       charge: '₹ 3000'),
   Choice(
-      billNo: '544',
       pcNumber: '5050',
       device: 'Scanner',
       problem:
@@ -51,7 +47,6 @@ List<Choice> choices = const <Choice>[
       progress: 'Delivered',
       charge: '₹ 300'),
   Choice(
-      billNo: '545',
       pcNumber: '5050',
       device: 'Laptop',
       problem:
@@ -94,14 +89,14 @@ class _SelectCardState extends State<SelectCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: 40,
+                        height: 30,
                         width: 200,
                         child: Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            'Bill No: ${widget.choice.billNo}',
+                            'Pc No: ${widget.choice.pcNumber}',
                             style: GoogleFonts.ubuntu(
-                                fontSize: 27,
+                                fontSize: 23,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white),
                           ),
@@ -123,7 +118,7 @@ class _SelectCardState extends State<SelectCard> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.purple.shade200,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(10),
                                     bottomLeft: Radius.circular(10))),
                             child: Center(
@@ -147,24 +142,12 @@ class _SelectCardState extends State<SelectCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          widget.choice.device,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                        const SizedBox(width: 30),
-                        Text(
-                          widget.choice.pcNumber,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                      ],
+                    child: Text(
+                      widget.choice.device,
+                      style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
                     ),
                   ),
                   const Spacer(),
@@ -190,60 +173,6 @@ class _SelectCardState extends State<SelectCard> {
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey),
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          widget.choice.device,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                        const SizedBox(width: 30),
-                        Text(
-                          widget.choice.pcNumber,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      widget.choice.charge,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      widget.choice.problem,
-                      style: GoogleFonts.poppins(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey),
-                    ),
                   ),
                 ),
               ),

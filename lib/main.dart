@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/loginpage.dart';
-import 'utils/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -17,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Stay Fit',
+        title: 'Pc Computer',
         debugShowCheckedModeBanner: false,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
+          builder: (context,AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return const AppBarPage();
             }

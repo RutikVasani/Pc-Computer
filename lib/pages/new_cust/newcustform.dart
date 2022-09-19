@@ -3,12 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
 
 class NewCustFormPage extends StatefulWidget {
-  var MobileNo;
-  var Name;
-  var itemNumber;
 
-  NewCustFormPage({Key? key, this.Name, this.MobileNo, this.itemNumber})
-      : super(key: key);
+  NewCustFormPage({Key? key}) : super(key: key);
 
   @override
   State<NewCustFormPage> createState() => _NewCustFormPageState();
@@ -43,12 +39,19 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                 alignment: Alignment.topLeft,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 80,
+                  height: 90,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: const Border(
+                      top: BorderSide(width: 1.5, color: Colors.black),
+                      left: BorderSide(width: 1.5, color: Colors.black),
+                      right: BorderSide(width: 1.5, color: Colors.black),
+                      bottom: BorderSide(width: 1.5, color: Colors.black),
+                    ),
+                  ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(
                         children: [
@@ -62,7 +65,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                           ),
                           SizedBox(width: 15),
                           Text(
-                            widget.Name,
+                            "widget.Name",
                             style: GoogleFonts.poppins(
                                 fontSize: 17, color: Colors.black),
                           ),
@@ -80,7 +83,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                           ),
                           SizedBox(width: 15),
                           Text(
-                            widget.MobileNo,
+                            "widget.MobileNo",
                             style: GoogleFonts.poppins(
                                 fontSize: 17, color: Colors.black),
                           ),

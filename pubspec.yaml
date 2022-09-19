@@ -41,6 +41,7 @@ dependencies:
   syncfusion_flutter_pdf: ^20.2.45
   firebase_auth: ^3.8.0
   firebase_core: ^1.22.0
+  cloud_firestore: ^3.4.8
 
 dev_dependencies:
   flutter_test:

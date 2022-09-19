@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     var date = DateFormat.yMMMEd().format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 234, 246, 255),
+      backgroundColor: const Color.fromARGB(255, 199, 244, 248),
       body: OrientationBuilder(builder: (context, orientation) {
         var TotalAmount = 3450;
         var Pc = 40;

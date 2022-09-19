@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/loginpage.dart';
 import 'package:pc1/pages/daily_data/details.dart';
+import 'package:pc1/pages/engineerpage.dart';
 import 'package:pc1/pages/homepage.dart';
-import 'package:pc1/pages/homepage/engineerpage/engineerpage.dart';
 import 'package:pc1/pages/new_cust/newcustform.dart';
+import 'package:pc1/pages/search.dart';
+import 'package:pc1/services/auth_service.dart';
+import 'package:pc1/services/crud.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -18,9 +22,8 @@ class _AppBarPageState extends State<AppBarPage> {
   int pageIndex = 0;
 
   final pages = [const HomePage(), ProgressPage()];
-  TextEditingController NameController = TextEditingController();
-  TextEditingController MobileNoController = TextEditingController();
-  TextEditingController ItemController = TextEditingController();
+  late String mobileno;
+  late String name;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,14 @@ class _AppBarPageState extends State<AppBarPage> {
               Icons.search,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPage(),
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(
@@ -56,10 +66,9 @@ class _AppBarPageState extends State<AppBarPage> {
                       title: Text('New Customer'),
                       content: Column(
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: TextField(
-                              controller: NameController,
                               decoration: const InputDecoration(
                                 labelText: 'Name',
                                 border: OutlineInputBorder(
@@ -67,33 +76,29 @@ class _AppBarPageState extends State<AppBarPage> {
                                         BorderRadius.all(Radius.circular(15))),
                                 prefixIcon: Icon(Icons.person),
                               ),
+                              onChanged: (value) {
+                                setState(() {
+                                  name = value;
+                                });
+                              },
                             ),
                           ),
                           SizedBox(height: 14),
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: TextField(
-                              controller: MobileNoController,
                               decoration: const InputDecoration(
-                                  labelText: 'Mobile No.',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  prefixIcon: Icon(Icons.call)),
-                            ),
-                          ),
-                          SizedBox(height: 14),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: TextField(
-                              controller: ItemController,
-                              decoration: const InputDecoration(
-                                labelText: 'Item Number.',
+                                labelText: 'Mobile No.',
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15))),
-                                prefixIcon: Icon(Icons.computer_outlined),
+                                prefixIcon: Icon(Icons.call),
                               ),
+                              onChanged: (value) {
+                                setState(() {
+                                  mobileno = value;
+                                });
+                              },
                             ),
                           ),
                         ],
@@ -105,14 +110,29 @@ class _AppBarPageState extends State<AppBarPage> {
                               child: Text("Submit"),
                               onPressed: () {
                                 Navigator.pop(context);
+                                var userid = FirebaseFirestore.instance
+                                    .collection("Customers")
+                                    .doc()
+                                    .id;
+                                Map<String, dynamic> custdata = {
+                                  'Name': name,
+                                  'Mobile no': mobileno,
+                                  'User id': userid,
+                                };
+                                Crud().adduser(userid, custdata, context).then(
+                                  (result) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Customer added"),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  },
+                                );
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NewCustFormPage(
-                                      Name: NameController.text,
-                                      MobileNo: MobileNoController.text,
-                                      itemNumber: ItemController,
-                                    ),
+                                    builder: (context) => NewCustFormPage(),
                                   ),
                                 );
                               }),
@@ -133,7 +153,7 @@ class _AppBarPageState extends State<AppBarPage> {
           ),
         ],
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 12, bottom: 12),
+          padding: const EdgeInsets.only(left: 10, top: 5, bottom: 12),
           child: IconButton(
             icon: const Icon(
               Icons.logout,
