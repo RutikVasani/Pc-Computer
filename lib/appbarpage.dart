@@ -8,8 +8,7 @@ import 'package:pc1/pages/engineerpage.dart';
 import 'package:pc1/pages/homepage.dart';
 import 'package:pc1/pages/new_cust/newcustform.dart';
 import 'package:pc1/pages/search.dart';
-import 'package:pc1/services/auth_service.dart';
-import 'package:pc1/services/crud.dart';
+import 'package:pc1/services/writedata.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -24,6 +23,7 @@ class _AppBarPageState extends State<AppBarPage> {
   final pages = [const HomePage(), ProgressPage()];
   late String mobileno;
   late String name;
+  late String PcNo;
 
   @override
   Widget build(BuildContext context) {
@@ -56,90 +56,162 @@ class _AppBarPageState extends State<AppBarPage> {
             ),
             onPressed: () {
               showDialog(
-                  barrierColor: Color.fromARGB(130, 144, 202, 249),
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      scrollable: true,
-                      title: Text('New Customer'),
-                      content: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                labelText: 'Name',
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15))),
-                                prefixIcon: Icon(Icons.person),
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  name = value;
-                                });
-                              },
+                barrierColor: Color.fromARGB(130, 144, 202, 249),
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    scrollable: true,
+                    title: Text('New Customer'),
+                    content: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              labelText: 'Name',
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              prefixIcon: Icon(Icons.person),
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                name = value;
+                              });
+                            },
                           ),
-                          SizedBox(height: 14),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                labelText: 'Mobile No.',
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15))),
-                                prefixIcon: Icon(Icons.call),
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  mobileno = value;
-                                });
-                              },
+                        ),
+                        SizedBox(height: 14),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              labelText: 'Mobile No.',
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              prefixIcon: Icon(Icons.call),
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                mobileno = value;
+                              });
+                            },
                           ),
-                        ],
-                      ),
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                              child: Text("Submit"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                var userid = FirebaseFirestore.instance
-                                    .collection("Customers")
-                                    .doc()
-                                    .id;
-                                Map<String, dynamic> custdata = {
-                                  'Name': name,
-                                  'Mobile no': mobileno,
-                                  'User id': userid,
-                                };
-                                Crud().adduser(userid, custdata, context).then(
-                                  (result) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("Customer added"),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  },
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NewCustFormPage(),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          child: Text("Submit"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            var CustId = FirebaseFirestore.instance
+                                .collection("Customers")
+                                .doc();
+                            Map<String, dynamic> custdata = {
+                              'Name': name,
+                              'Mobile No': mobileno,
+                              'Date': DateTime.now(),
+                            };
+                            WriteData()
+                                .addCust(mobileno, custdata, context)
+                                .then(
+                              (result) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Customer added"),
+                                    backgroundColor: Colors.red,
                                   ),
                                 );
-                              }),
-                        )
-                      ],
-                    );
-                  });
+                              },
+                            );
+                            showDialog(
+                              barrierColor: Color.fromARGB(130, 144, 202, 249),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  scrollable: true,
+                                  title: const Text('Add New Pc No'),
+                                  content: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'Pc no',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        prefixIcon: Icon(Icons.person),
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          PcNo = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  actions: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevatedButton(
+                                        child: Text("Submit"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          var PcNumId = FirebaseFirestore
+                                              .instance
+                                              .collection("Customers")
+                                              .doc(mobileno)
+                                              .collection('Pc Number')
+                                              .doc(PcNo);
+                                          Map<String, dynamic> PcNumData = {
+                                            'Pc No': PcNo,
+                                            'Date': DateTime.now(),
+                                          };
+                                          WriteData()
+                                              .addPc(mobileno, PcNo, PcNumData,
+                                                  context)
+                                              .then(
+                                            (result) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text("Pc added"),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NewCustFormPage(
+                                                      mobileno: mobileno,
+                                                      name: name,
+                                                      pcno: PcNo,
+                                                    )),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  );
+                },
+              );
             },
           ),
           IconButton(

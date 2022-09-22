@@ -34,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
         ),
       )),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('Customers').doc().collection('Mobile No').snapshots(),
+        stream: FirebaseFirestore.instance.collection('Customers').snapshots(),
         builder: (context, snapshot) {
           return (snapshot.connectionState == ConnectionState.waiting)
               ? const Center(
