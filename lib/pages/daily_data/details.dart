@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Scaffold ProgressPage() {
   return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 199, 244, 248),
+    backgroundColor: const Color.fromARGB(255, 211, 244, 247),
     body: ListView.builder(
       itemCount: choices.length,
       itemBuilder: (context, index) =>

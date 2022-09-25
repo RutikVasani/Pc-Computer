@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  SearchPage({Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  String mobileno = "";
+  String MobileNo = "";
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
           onChanged: (value) {
             setState(
               () {
-                mobileno = value;
+                MobileNo = value;
               },
             );
           },
@@ -45,10 +45,10 @@ class _SearchPageState extends State<SearchPage> {
                   itemBuilder: (context, index) {
                     var data = snapshot.data!.docs[index].data()
                         as Map<String, dynamic>;
-                    if (mobileno.isEmpty &&
+                    if (MobileNo.isEmpty &&
                         data['Mobile no']
                             .toString()
-                            .startsWith(mobileno.toLowerCase())) {
+                            .startsWith(MobileNo.toLowerCase())) {
                       print(data['Mobile no'].toString());
                       return ListTile(
                         title: Text(

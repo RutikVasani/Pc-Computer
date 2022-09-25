@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>362738188855-a84n69ghgsbbbiglb7lp7rutnd9035ek.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.362738188855-a84n69ghgsbbbiglb7lp7rutnd9035ek</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBuvn_bkVQVjyNvwkcvYj6ZDzqeEz8iGyc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>362738188855</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pccomputer.pc1</string>
+	<key>PROJECT_ID</key>
+	<string>pc-computer-1ac53</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pc-computer-1ac53.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:362738188855:ios:cfb743f40f669719a1f5b2</string>
+	<key>DATABASE_URL</key>
+	<string>https://pc-computer-1ac53-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

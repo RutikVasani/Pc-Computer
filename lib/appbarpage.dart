@@ -44,7 +44,7 @@ class _AppBarPageState extends State<AppBarPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SearchPage(),
+                  builder: (context) => SearchPage(),
                 ),
               );
             },

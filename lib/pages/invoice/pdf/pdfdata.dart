@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pc1/pages/invoice/pdf/payment.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'mobile.dart';
 
@@ -49,14 +50,14 @@ class _PdfDataPage extends State<PdfDataPage> {
                             "RECIPIENT",
                             style: GoogleFonts.poppins(
                                 fontSize: 20,
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w300),
                           ),
                           Text(
                             "Invoice",
                             style: GoogleFonts.ubuntu(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -341,13 +342,33 @@ class _PdfDataPage extends State<PdfDataPage> {
                 ),
               ),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-              ),
-              onPressed: generateInvoice,
-              child: const Text('Generate PDF'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+                  ),
+                  onPressed: generateInvoice,
+                  child: const Text('Generate PDF'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentModePage(),
+                      ),
+                    );
+                  },
+                  child: const Text('Payment Type'),
+                ),
+              ],
             )
           ],
         ),
@@ -355,7 +376,7 @@ class _PdfDataPage extends State<PdfDataPage> {
     );
   }
 
- Future<void> generateInvoice() async {
+  Future<void> generateInvoice() async {
     //Create a PDF document.
     final PdfDocument document = PdfDocument();
     //Add page to the PDF
@@ -395,7 +416,6 @@ class _PdfDataPage extends State<PdfDataPage> {
         bounds: Rect.fromLTWH(25, 0, pageSize.width, 90),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
 
-
     final PdfFont contentFont = PdfStandardFont(PdfFontFamily.helvetica, 9);
 
     //Create data foramt and convert it to text.
@@ -404,7 +424,8 @@ class _PdfDataPage extends State<PdfDataPage> {
         'Invoice Number: 543\r\n\r\nDate: ${format.format(DateTime.now())}';
     final Size contentSize = contentFont.measureString(invoiceNumber);
     // ignore: leading_newlines_in_multiline_strings
-    const String address = '''Bill To: \r\n\r\nRutik Vasani, \r\n\r\n9327197604''';
+    const String address =
+        '''Bill To: \r\n\r\nRutik Vasani, \r\n\r\n9327197604''';
 
     PdfTextElement(text: invoiceNumber, font: contentFont).draw(
         page: page,
@@ -515,7 +536,8 @@ class _PdfDataPage extends State<PdfDataPage> {
   }
 
   //Create and row for the grid.
-  void addProducts(String pcNumber, String item, double price, double total, PdfGrid grid) {
+  void addProducts(
+      String pcNumber, String item, double price, double total, PdfGrid grid) {
     final PdfGridRow row = grid.rows.add();
     row.cells[0].value = pcNumber;
     row.cells[1].value = item;
