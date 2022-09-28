@@ -8,7 +8,11 @@ class NewCustFormPage extends StatefulWidget {
   final String mobileno;
   final String name;
   final String pcno;
-  NewCustFormPage({Key? key, required this.mobileno, required this.pcno, required this.name})
+  NewCustFormPage(
+      {Key? key,
+      required this.mobileno,
+      required this.pcno,
+      required this.name})
       : super(key: key);
 
   @override
@@ -247,29 +251,19 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                               return;
                             }
                             _formKey.currentState!.save();
-                            var ItemId = FirebaseFirestore.instance
-                                .collection('Customers')
-                                .doc(widget.mobileno)
-                                .collection('PcNumber')
-                                .doc(widget.pcno)
-                                .collection('Item data')
-                                .doc()
-                                .id;
                             Map<String, dynamic> ItemData = {
                               'Pc No': _pcNumber,
+                              'Mobile No' : widget.mobileno,
+                              'Name' : widget.name,
                               'Item': _item,
                               'Bring Item': _bringWithItem,
                               'Problem': _problem,
                               'Cost': _cost,
                               'Remarks': _remarks,
-                              'Item Id': ItemId,
                               'Progress': "Pending",
                               'Date': DateTime.now(),
                             };
-                            WriteData()
-                                .addPcData(
-                                    widget.mobileno, widget.pcno, ItemId, ItemData, context)
-                                .then(
+                            WriteData().addPcData(ItemData, context).then(
                               (result) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

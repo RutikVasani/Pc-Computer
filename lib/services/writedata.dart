@@ -48,20 +48,13 @@ class WriteData {
   }
 
   Future<void> addPcData(
-    MobileNo,
-    PcNo,
-    ItemId,
     ItemData,
     BuildContext context,
   ) async {
     try {
       FirebaseFirestore.instance
-          .collection('Customers')
-          .doc(MobileNo)
-          .collection('PcNumber')
-          .doc(PcNo)
-          .collection('Item Data')
-          .doc(ItemId)
+          .collection('TodayData')
+          .doc()
           .set(ItemData);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 
-class DeliveredPcDatails extends StatefulWidget {
-  const DeliveredPcDatails({Key? key}) : super(key: key);
+class AllPcDetails extends StatefulWidget {
+  const AllPcDetails({Key? key}) : super(key: key);
 
   @override
-  State<DeliveredPcDatails> createState() => _DeliveredPcDatailsState();
+  State<AllPcDetails> createState() => _AllPcDetailsState();
 }
 
-class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
+class _AllPcDetailsState extends State<AllPcDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +33,8 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                       ),
                     );
                   }
-                  if (docTodayData["Progress"] == "Delivered") {
-                    String dropdownValue = 'Delivered';
+                  if (docTodayData["Progress"] == "Pending") {
+                    String dropdownValue = 'Pending';
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
@@ -48,7 +47,7 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                             children: [
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: Colors.purple,
+                                    color: Colors.blue,
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(10),
                                         topLeft: Radius.circular(10))),
@@ -80,7 +79,7 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                           width: 100,
                                           height: 40,
                                           decoration: BoxDecoration(
-                                              color: Colors.purple.shade200,
+                                              color: Colors.blue.shade200,
                                               borderRadius:
                                                   const BorderRadius.only(
                                                       topRight:
@@ -172,40 +171,18 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        docTodayData["Problem"],
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey),
-                                      ),
-                                    ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    docTodayData["Problem"],
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey),
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PdfDataPage(),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.picture_as_pdf,
-                                      color: Colors.black,
-                                      size: 30,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                               const SizedBox(height: 10),
                             ],
@@ -213,18 +190,17 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                     );
                   } else {
                     return const Center(
-                      child: SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: Center(
-                          child: Text(
-                            "Work Done",
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
+                        child: SizedBox(
+                      width: 200,
+                      height: 100,
+                      child: Center(
+                        child: Text(
+                          "Work Done",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    );
+                    ));
                   }
                 },
               );

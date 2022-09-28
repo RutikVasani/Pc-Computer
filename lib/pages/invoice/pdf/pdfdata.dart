@@ -75,7 +75,7 @@ class _PdfDataPage extends State<PdfDataPage> {
                                 fontSize: 13, color: Colors.grey),
                           ),
                           Text(
-                            "Invoice No:",
+                            "Date:",
                             style: GoogleFonts.ubuntu(
                                 fontSize: 18, color: Colors.black),
                           ),
@@ -93,34 +93,8 @@ class _PdfDataPage extends State<PdfDataPage> {
                                 fontSize: 13, color: Colors.grey),
                           ),
                           Text(
-                            "543",
-                            style: GoogleFonts.ubuntu(
-                                fontSize: 13, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Date:",
-                            style: GoogleFonts.ubuntu(
-                                fontSize: 18, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
                             _date,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.ubuntu(
                                 fontSize: 13, color: Colors.grey),
                           ),
                         ],

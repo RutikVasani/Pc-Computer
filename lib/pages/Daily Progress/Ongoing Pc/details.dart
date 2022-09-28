@@ -1,189 +1,221 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Scaffold OnGoingPcDatails() {
-  return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 234, 246, 247),
-    body: ListView.builder(
-      itemCount: choices.length,
-      itemBuilder: (context, index) =>
-          SelectCard(choice: choices[index], index: index),
-      // scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      physics: const ScrollPhysics(),
-    ),
-  );
-}
+class OnGoingPcDatails extends StatefulWidget {
+  const OnGoingPcDatails({Key? key}) : super(key: key);
 
-class Choice {
-  const Choice({
-    required this.pcNumber,
-    required this.charge,
-    required this.device,
-    required this.problem,
-  });
-  final String pcNumber;
-  final String device;
-  final String problem;
-  final String charge;
-}
-
-List<Choice> choices = const <Choice>[
-  Choice(
-      pcNumber: '5050',
-      device: 'Laptop',
-      problem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      charge: '₹ 3000'),
-  Choice(
-      pcNumber: '5050',
-      device: 'Scanner',
-      problem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      charge: '₹ 300'),
-  Choice(
-      pcNumber: '5050',
-      device: 'Laptop',
-      problem:
-          'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-      charge: '₹ 500'),
-];
-
-const List<Widget> pages = <Widget>[];
-
-class SelectCard extends StatefulWidget {
-  const SelectCard({Key? key, required this.choice, required this.index})
-      : super(key: key);
-  final Choice choice;
-  final int index;
   @override
-  State<SelectCard> createState() => _SelectCardState();
+  State<OnGoingPcDatails> createState() => _OnGoingPcDatailsState();
 }
 
-class _SelectCardState extends State<SelectCard> {
+class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
   @override
   Widget build(BuildContext context) {
-    var dropdownvalue = 'On Going';
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.red.shade700,
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        width: 200,
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'Pc No: ${widget.choice.pcNumber}',
-                            style: GoogleFonts.ubuntu(
-                                fontSize: 23,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                        ),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 211, 244, 247),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("TodayData").snapshots(),
+        builder:
+            (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            if (snapshot.data!.docs.isNotEmpty) {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (___, int index) {
+                  Map<String, dynamic> docTodayData =
+                      snapshot.data!.docs[index].data();
+                  String uid = snapshot.data!.docs[index].id;
+                  if (docTodayData.isEmpty) {
+                    return const SizedBox(
+                      child: Center(
+                        child: Text("Document is Empty"),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Container(
-                          width: 100,
-                          height: 40,
+                    );
+                  }
+                  if (docTodayData["Progress"] == "On Going") {
+                    String dropdownValue = 'On Going';
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.red.shade200,
-                              borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10))),
-                          child: Center(
-                            child: DropdownButton(
-                              value: dropdownvalue,
-                              style: GoogleFonts.poppins(color: Colors.white),
-                              dropdownColor:
-                                  const Color.fromARGB(255, 16, 121, 174),
-                              underline: const SizedBox(),
-                              iconSize: 0,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: "On Going",
-                                  child: Text("On Going"),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red.shade700,
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10))),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                        width: 200,
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Text(
+                                            'Pc No: ${docTodayData["Pc No"]}',
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Container(
+                                          width: 100,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.red.shade200,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topRight:
+                                                          Radius.circular(10),
+                                                      bottomLeft:
+                                                          Radius.circular(10))),
+                                          child: Center(
+                                            child: DropdownButton<String>(
+                                              value: dropdownValue,
+                                              dropdownColor:
+                                                  const Color.fromARGB(
+                                                      255, 16, 121, 174),
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white),
+                                              underline: const SizedBox(),
+                                              iconSize: 0,
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  dropdownValue = newValue!;
+                                                });
+                                                docTodayData["Progress"] ==
+                                                    dropdownValue;
+                                                try {
+                                                  FirebaseFirestore.instance
+                                                      .collection("TodayData")
+                                                      .doc(uid)
+                                                      .update({
+                                                    "Progress": dropdownValue
+                                                  }).then((_) {
+                                                    print("success!" +
+                                                        dropdownValue);
+                                                    print(uid);
+                                                  });
+                                                } on FirebaseException catch (e) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          e.message.toString()),
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              items: <String>[
+                                                'Pending',
+                                                'On Going',
+                                                'Repaired',
+                                                'Delivered',
+                                              ].map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                                return DropdownMenuItem<String>(
+                                                  value: value,
+                                                  child: Text(value),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                DropdownMenuItem(
-                                  value: "Repaired",
-                                  child: Text("Repaired"),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    child: Text(
+                                      docTodayData["Item"],
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: Text(
+                                      docTodayData["Cost"],
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    docTodayData["Problem"],
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey),
+                                  ),
                                 ),
-                                DropdownMenuItem(
-                                  value: "Delivereed",
-                                  child: Text("Delivered"),
-                                ),
-                              ],
-                              onChanged: (value) {
-                                setState(() {
-                                  dropdownvalue = value.toString();
-                                });
-                              },
-                            ),
-                          ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          )),
+                    );
+                  } else {
+                    return const Center(
+                        child: SizedBox(
+                      width: 200,
+                      height: 100,
+                      child: Center(
+                        child: Text(
+                          "Work Done",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Text(
-                      widget.choice.device,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      widget.choice.charge,
-                      style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    widget.choice.problem,
-                    style: GoogleFonts.poppins(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-          )),
+                    ));
+                  }
+                },
+              );
+            } else {
+              return const Center(
+                child: Text("Document aren't available"),
+              );
+            }
+          } else {
+            return const Center(
+              child: Text("Getting Error"),
+            );
+          }
+        },
+      ),
     );
   }
 }

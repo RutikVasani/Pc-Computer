@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/pages/Daily%20Progress/Today%20All/datails.dart';
+import 'package:pc1/pages/Daily%20Progress/Today%20All/details.dart';
 
 class TodayAllPcPage extends StatelessWidget {
   const TodayAllPcPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class TodayAllPcPage extends StatelessWidget {
             style:
                 GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
       ),
-      body: AllPcDatails(),
+      body: const AllPcDetails(),
     );
   }
 }
