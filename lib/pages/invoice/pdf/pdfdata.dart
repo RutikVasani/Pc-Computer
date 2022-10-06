@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:pc1/pages/invoice/pdf/payment.dart';
+import 'package:pc1/pages/invoice/pdf/payment/payment.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'mobile.dart';
 
@@ -316,33 +316,13 @@ class _PdfDataPage extends State<PdfDataPage> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-                  ),
-                  onPressed: generateInvoice,
-                  child: const Text('Generate PDF'),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PaymentModePage(),
-                      ),
-                    );
-                  },
-                  child: const Text('Payment Type'),
-                ),
-              ],
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+              ),
+              onPressed: generateInvoice,
+              child: const Text('Generate PDF'),
             )
           ],
         ),

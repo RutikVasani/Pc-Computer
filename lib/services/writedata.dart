@@ -52,10 +52,7 @@ class WriteData {
     BuildContext context,
   ) async {
     try {
-      FirebaseFirestore.instance
-          .collection('TodayData')
-          .doc()
-          .set(ItemData);
+      FirebaseFirestore.instance.collection('TodayData').doc().set(ItemData);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

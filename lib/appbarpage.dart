@@ -20,7 +20,7 @@ class AppBarPage extends StatefulWidget {
 class _AppBarPageState extends State<AppBarPage> {
   int pageIndex = 0;
 
-  final pages = [const HomePage(), ProgressPage()];
+  final pages = [const HomePage(), const ProgressPage()];
   late String mobileno;
   late String name;
   late String PcNo;
@@ -56,14 +56,14 @@ class _AppBarPageState extends State<AppBarPage> {
             ),
             onPressed: () {
               showDialog(
-                barrierColor: Color.fromARGB(130, 144, 202, 249),
+                barrierColor: const Color.fromARGB(130, 144, 202, 249),
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15))),
                     scrollable: true,
-                    title: Text('New Customer'),
+                    title: const Text('New Customer'),
                     content: Column(
                       children: <Widget>[
                         SizedBox(
@@ -83,7 +83,7 @@ class _AppBarPageState extends State<AppBarPage> {
                             },
                           ),
                         ),
-                        SizedBox(height: 14),
+                        const SizedBox(height: 14),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: TextField(
@@ -107,12 +107,9 @@ class _AppBarPageState extends State<AppBarPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
-                          child: Text("Submit"),
+                          child: const Text("Submit"),
                           onPressed: () {
                             Navigator.pop(context);
-                            var CustId = FirebaseFirestore.instance
-                                .collection("Customers")
-                                .doc();
                             Map<String, dynamic> custdata = {
                               'Name': name,
                               'Mobile No': mobileno,
@@ -131,11 +128,11 @@ class _AppBarPageState extends State<AppBarPage> {
                               },
                             );
                             showDialog(
-                              barrierColor: Color.fromARGB(130, 144, 202, 249),
+                              barrierColor: const Color.fromARGB(130, 144, 202, 249),
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(15))),
                                   scrollable: true,
@@ -161,7 +158,7 @@ class _AppBarPageState extends State<AppBarPage> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
-                                        child: Text("Submit"),
+                                        child: const Text("Submit"),
                                         onPressed: () {
                                           Navigator.pop(context);
                                           var PcNumId = FirebaseFirestore
@@ -269,7 +266,7 @@ class _AppBarPageState extends State<AppBarPage> {
                 ? Row(
                     children: [
                       Image.asset("assets/images/home.png", height: 25),
-                      SizedBox(width: 7),
+                      const SizedBox(width: 7),
                       Text(
                         "Home",
                         style: GoogleFonts.poppins(
@@ -289,7 +286,7 @@ class _AppBarPageState extends State<AppBarPage> {
                   ? Row(
                       children: [
                         Image.asset("assets/images/menu.png", height: 25),
-                        SizedBox(width: 7),
+                        const SizedBox(width: 7),
                         Text("Menu",
                             style: GoogleFonts.poppins(
                                 fontSize: 22, color: Colors.white))
