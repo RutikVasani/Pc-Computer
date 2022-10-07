@@ -5,6 +5,7 @@ import 'package:pc1/pages/Daily%20Progress/Delivered%20Pc/deliveredpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Ongoing%20Pc/ongoingpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Repaired%20Pc/repairedpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
+import 'package:pc1/pages/search/search.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,11 +17,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 211, 244, 247),
       body: OrientationBuilder(builder: (context, orientation) {
-        var TotalAmount = 3450;
-        var Pc = 40;
-        var delivered = 20;
-        var ongoing = 3;
-        var repaired = 30;
         return SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,7 +52,7 @@ class HomePage extends StatelessWidget {
                           child: Text(
                             date,
                             style: GoogleFonts.ubuntu(
-                                fontSize: 25, color: Colors.white),
+                                fontSize: 22, color: Colors.white),
                           ),
                         ),
                       ),
@@ -69,78 +65,85 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 15, left: 20),
+                        padding: const EdgeInsets.only(top: 10, left: 20),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text("Total Collection",
+                          child: Text("Search Number",
                               style: GoogleFonts.ubuntu(
                                   color: Colors.black,
-                                  fontSize: 17,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.w800)),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SearchPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(5),
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "₹ ",
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    const Icon(
+                                      Icons.search,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "Search",
                                       style: GoogleFonts.ubuntu(
                                         fontSize: 30,
                                         color: const Color.fromARGB(
                                             255, 16, 121, 174),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    "3550",
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 30,
-                                      color: const Color.fromARGB(
-                                          255, 16, 121, 174),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DeliveredPcPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    "View all",
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 15,
-                                      color: const Color.fromARGB(
-                                          255, 16, 121, 174),
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DeliveredPcPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "View all",
+                                      style: GoogleFonts.ubuntu(
+                                        fontSize: 15,
+                                        color: const Color.fromARGB(
+                                            255, 16, 121, 174),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -228,20 +231,6 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 5),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "Task: $Pc",
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               const SizedBox(height: 10),
                             ]),
                           ),
@@ -276,37 +265,18 @@ class HomePage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 10, top: 8, right: 10),
-                                child: Row(
-                                  children: [
-                                    Image.asset("assets/images/ongoing.png",
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                .075),
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 40),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 10),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                              "Task: $ongoing",
-                                              style: GoogleFonts.ubuntu(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Image.asset(
+                                      "assets/images/ongoing.png",
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .1),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 15, right: 15, bottom: 5),
+                                    top: 15, left: 15, right: 15, bottom: 5),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
@@ -355,36 +325,16 @@ class HomePage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 10, top: 8, right: 10),
-                                child: Row(
-                                  children: [
-                                    Image.asset("assets/images/tick.png",
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                .07),
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 40),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 8),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                              "Task: $repaired",
-                                              style: GoogleFonts.ubuntu(
-                                                fontSize: 15,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Image.asset("assets/images/tick.png",
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .1),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
+                                padding: const EdgeInsets.only(top: 10,
                                     left: 15, right: 10, bottom: 5),
                                 child: Align(
                                   alignment: Alignment.topLeft,
@@ -447,20 +397,6 @@ class HomePage extends StatelessWidget {
                                     style: GoogleFonts.ubuntu(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 5),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "Task: $delivered",
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 15,
                                       color: Colors.white,
                                     ),
                                   ),

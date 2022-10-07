@@ -151,7 +151,8 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                         MobileNo: docTodayData[
                                                             "Mobile No"],
                                                         PcNo: docTodayData[
-                                                            "Pc No"], docData: docTodayData,
+                                                            "Pc No"],
+                                                        docData: docTodayData,
                                                       ),
                                                     ),
                                                   );

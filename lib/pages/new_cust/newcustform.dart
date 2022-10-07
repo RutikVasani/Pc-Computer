@@ -252,8 +252,8 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                             _formKey.currentState!.save();
                             Map<String, dynamic> ItemData = {
                               'Pc No': _pcNumber,
-                              'Mobile No' : widget.mobileno,
-                              'Name' : widget.name,
+                              'Mobile No': widget.mobileno,
+                              'Name': widget.name,
                               'Item': _item,
                               'Bring Item': _bringWithItem,
                               'Problem': _problem,
@@ -272,6 +272,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                                 );
                               },
                             );
+                            Navigator.pop(context);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

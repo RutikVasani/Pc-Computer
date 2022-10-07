@@ -44,7 +44,9 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ItemDataPage(uid: uid,),
+                              builder: (context) => ItemDataPage(
+                                uid: uid,
+                              ),
                             ),
                           );
                         },
@@ -118,7 +120,8 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                         .collection("TodayData")
                                                         .doc(uid)
                                                         .update({
-                                                      "Progress": dropdownValue
+                                                      "Progress": dropdownValue,
+                                                      "Uid": uid
                                                     }).then((_) {
                                                       print("success!" +
                                                           dropdownValue);

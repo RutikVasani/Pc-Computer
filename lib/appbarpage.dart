@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/loginpage.dart';
+import 'package:pc1/models/MobileDialog.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/engineerpage.dart';
 import 'package:pc1/pages/homepage.dart';
-import 'package:pc1/pages/new_cust/newcustform.dart';
-import 'package:pc1/pages/search.dart';
-import 'package:pc1/services/writedata.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -37,177 +34,15 @@ class _AppBarPageState extends State<AppBarPage> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.search,
+              Icons.add,
               size: 30,
             ),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SearchPage(),
+                  builder: (context) => MobileNoDialogPage(),
                 ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              size: 30,
-            ),
-            onPressed: () {
-              showDialog(
-                barrierColor: const Color.fromARGB(130, 144, 202, 249),
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    scrollable: true,
-                    title: const Text('New Customer'),
-                    content: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              prefixIcon: Icon(Icons.person),
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                name = value;
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Mobile No.',
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              prefixIcon: Icon(Icons.call),
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                mobileno = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          child: const Text("Submit"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Map<String, dynamic> custdata = {
-                              'Name': name,
-                              'Mobile No': mobileno,
-                              'Date': DateTime.now(),
-                            };
-                            WriteData()
-                                .addCust(mobileno, custdata, context)
-                                .then(
-                              (result) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Customer added"),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              },
-                            );
-                            showDialog(
-                              barrierColor: const Color.fromARGB(130, 144, 202, 249),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  scrollable: true,
-                                  title: const Text('Add New Pc No'),
-                                  content: SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: TextField(
-                                      decoration: const InputDecoration(
-                                        labelText: 'Pc no',
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15))),
-                                        prefixIcon: Icon(Icons.person),
-                                      ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          PcNo = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  actions: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                        child: const Text("Submit"),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          var PcNumId = FirebaseFirestore
-                                              .instance
-                                              .collection("Customers")
-                                              .doc(mobileno)
-                                              .collection('Pc Number')
-                                              .doc(PcNo);
-                                          Map<String, dynamic> PcNumData = {
-                                            'Pc No': PcNo,
-                                            'Date': DateTime.now(),
-                                          };
-                                          WriteData()
-                                              .addPc(mobileno, PcNo, PcNumData,
-                                                  context)
-                                              .then(
-                                            (result) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                  content: Text("Pc added"),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NewCustFormPage(
-                                                      mobileno: mobileno,
-                                                      name: name,
-                                                      pcno: PcNo,
-                                                    )),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  );
-                },
               );
             },
           ),

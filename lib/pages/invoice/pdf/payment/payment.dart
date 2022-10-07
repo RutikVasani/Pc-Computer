@@ -8,16 +8,16 @@ class PaymentModePage extends StatefulWidget {
   String cost;
   String uid;
   String MobileNo;
-  Map<String, dynamic> docData;
   String PcNo;
-  PaymentModePage({
-    Key? key,
-    required this.cost,
-    required this.uid,
-    required this.MobileNo,
-    required this.PcNo,
-    required this.docData,
-  }) : super(key: key);
+  Map<String, dynamic> docData;
+  PaymentModePage(
+      {Key? key,
+      required this.cost,
+      required this.uid,
+      required this.MobileNo,
+      required this.PcNo,
+      required this.docData})
+      : super(key: key);
 
   @override
   State<PaymentModePage> createState() => _PaymentModePageState();
@@ -136,15 +136,23 @@ class _PaymentModePageState extends State<PaymentModePage> {
                 FirebaseFirestore.instance
                     .collection("TodayData")
                     .doc(widget.uid)
-                    .update({"Payment": payment, "Uid": widget.uid});
+                    .update({"Payment": payment});
                 FirebaseFirestore.instance
-                    .collection('Customers')
+                    .collection("Customers")
                     .doc(widget.MobileNo)
-                    .collection('PcNumber')
+                    .collection("PcNumber")
                     .doc(widget.PcNo)
-                    .collection(widget.uid)
+                    .collection("Data")
                     .doc(widget.uid)
                     .set(widget.docData);
+                FirebaseFirestore.instance
+                    .collection("Customers")
+                    .doc(widget.MobileNo)
+                    .collection("PcNumber")
+                    .doc(widget.PcNo)
+                    .collection("Data")
+                    .doc(widget.uid)
+                    .update({"Payment": payment, "Progress": "Delivered"});
                 if (payment != null) {
                   Navigator.pop(context);
                 }
