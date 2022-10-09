@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/appbarpage.dart';
 
 class ItemDataPage extends StatefulWidget {
   String uid;
@@ -180,7 +181,7 @@ class _ItemDataPageState extends State<ItemDataPage> {
                             docItemData["Remarks"] == ""
                                 ? 00
                                 : docItemData["Remarks"],
-                                textAlign: TextAlign.start,
+                            textAlign: TextAlign.start,
                             style: GoogleFonts.poppins(
                               color: Colors.grey,
                               fontSize: 16,
@@ -194,6 +195,27 @@ class _ItemDataPageState extends State<ItemDataPage> {
               ),
             );
           }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 15, bottom: 15),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AppBarPage(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_forward_outlined,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

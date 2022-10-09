@@ -64,16 +64,7 @@ class _AppBarPageState extends State<AppBarPage> {
               color: Colors.white,
               size: 30,
             ),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-            },
+            onPressed: () {},
           ),
         ),
       ),

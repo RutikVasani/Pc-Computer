@@ -136,7 +136,6 @@ class _ProgressPageState extends State<ProgressPage> {
                                                 'Pending',
                                                 'On Going',
                                                 'Repaired',
-                                                'Delivered',
                                               ].map<DropdownMenuItem<String>>(
                                                   (String value) {
                                                 return DropdownMenuItem<String>(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/itemdata.dart';
 
 class OnGoingPcDatails extends StatefulWidget {
@@ -44,7 +45,9 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ItemDataPage(uid: uid,),
+                              builder: (context) => ItemDataPage(
+                                uid: uid,
+                              ),
                             ),
                           );
                         },
@@ -82,6 +85,50 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                             ),
                                           ),
                                         ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              docTodayData["Progress"] =
+                                                  "Repaired";
+                                            });
+                                            try {
+                                              FirebaseFirestore.instance
+                                                  .collection("TodayData")
+                                                  .doc(uid)
+                                                  .update({
+                                                "Progress":
+                                                    docTodayData["Progress"],
+                                              }).then((_) {
+                                                print("success!" +
+                                                    docTodayData["Progress"]);
+                                                print(uid);
+                                              });
+                                            } on FirebaseException catch (e) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      e.message.toString()),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          icon: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.blue.shade200,
+                                            ),
+                                            child: const Icon(
+                                              Icons.done,
+                                              size: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 10),
@@ -95,7 +142,8 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                         topRight:
                                                             Radius.circular(10),
                                                         bottomLeft:
-                                                            Radius.circular(10))),
+                                                            Radius.circular(
+                                                                10))),
                                             child: Center(
                                               child: DropdownButton<String>(
                                                 value: dropdownValue,
@@ -124,11 +172,12 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                       print(uid);
                                                     });
                                                   } on FirebaseException catch (e) {
-                                                    ScaffoldMessenger.of(context)
+                                                    ScaffoldMessenger.of(
+                                                            context)
                                                         .showSnackBar(
                                                       SnackBar(
-                                                        content: Text(
-                                                            e.message.toString()),
+                                                        content: Text(e.message
+                                                            .toString()),
                                                         backgroundColor:
                                                             Colors.red,
                                                       ),
@@ -139,10 +188,10 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                   'Pending',
                                                   'On Going',
                                                   'Repaired',
-                                                  'Delivered',
                                                 ].map<DropdownMenuItem<String>>(
                                                     (String value) {
-                                                  return DropdownMenuItem<String>(
+                                                  return DropdownMenuItem<
+                                                      String>(
                                                     value: value,
                                                     child: Text(value),
                                                   );
@@ -182,7 +231,8 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                   ],
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width / 1.1,
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.1,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
@@ -224,6 +274,27 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
             );
           }
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 15, bottom: 15),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AppBarPage(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_forward_outlined,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

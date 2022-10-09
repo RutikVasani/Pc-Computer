@@ -21,11 +21,20 @@ class NewCustFormPage extends StatefulWidget {
 class _NewCustFormPageState extends State<NewCustFormPage> {
   late String _pcNumber;
   late String _item;
-  late String _bringWithItem;
+  late String _bringWithItem = "";
   late String _problem;
   late String _cost;
   late String _remarks;
   final _formKey = GlobalKey<FormState>();
+  String? item;
+  bool laptop = false;
+  bool printer = false;
+  bool computer = false;
+  bool other = false;
+  bool is_checked1 = false;
+  bool is_checked2 = false;
+  bool is_checked3 = false;
+  late String Bitem = "";
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +128,10 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          initialValue: widget.pcno,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.design_services),
                             labelText: 'Enter Pc Number',
-                            hintText: '5050',
                             border: OutlineInputBorder(),
                           ),
                           onChanged: (value) {
@@ -135,47 +144,349 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                       //box styling
                       const SizedBox(height: 10),
                       //text input
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.devices),
-                            labelText: 'Enter item',
-                            hintText: 'laptop/pc',
-                            border: OutlineInputBorder(),
+                      Row(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Radio<String>(
+                                  value: "Laptop",
+                                  groupValue: item,
+                                  onChanged: (value) {
+                                    item = value.toString();
+                                    _item = item!;
+                                    setState(() {
+                                      laptop = true;
+                                      printer = false;
+                                      computer = false;
+                                      other = false;
+                                    });
+                                  }),
+                              const Text('Laptop',
+                                  style: TextStyle(fontSize: 20))
+                            ],
                           ),
-                          onFieldSubmitted: (value) {},
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Enter a Item Name';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _item = value;
-                            });
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.list),
-                            labelText:
-                                'Enter list of item which bring with them',
-                            hintText: 'Charger / Bug / printer cable / Ram-Rom',
-                            border: OutlineInputBorder(),
+                          Row(
+                            children: <Widget>[
+                              Radio<String>(
+                                  value: "Printer",
+                                  groupValue: item,
+                                  onChanged: (value) {
+                                    item = value.toString();
+                                    _item = item!;
+                                    setState(() {
+                                      laptop = false;
+                                      printer = true;
+                                      computer = false;
+                                      other = false;
+                                    });
+                                  }),
+                              const Text('Printer',
+                                  style: TextStyle(fontSize: 20))
+                            ],
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              _bringWithItem = value;
-                            });
-                          },
-                        ),
+                        ],
                       ),
+                      Row(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Radio<String>(
+                                  value: "Computer",
+                                  groupValue: item,
+                                  onChanged: (value) {
+                                    item = value.toString();
+                                    _item = item!;
+                                    setState(() {
+                                      laptop = false;
+                                      printer = false;
+                                      computer = true;
+                                      other = false;
+                                    });
+                                  }),
+                              const Text('Computer',
+                                  style: TextStyle(fontSize: 20))
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Radio<String>(
+                                  value: "Other",
+                                  groupValue: item,
+                                  onChanged: (value) {
+                                    item = value.toString();
+                                    _item = item!;
+                                    setState(() {
+                                      laptop = false;
+                                      printer = false;
+                                      computer = false;
+                                      other = true;
+                                    });
+                                  }),
+                              const Text('Other',
+                                  style: TextStyle(fontSize: 20))
+                            ],
+                          ),
+                        ],
+                      ),
+                      laptop
+                          ? Column(
+                              children: [
+                                CheckboxListTile(
+                                    title: Text("Charger"),
+                                    value: is_checked1,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked1 = value!;
+                                        if (is_checked1 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Charger,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                CheckboxListTile(
+                                    title: Text("Bag"),
+                                    value: is_checked2,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked2 = value!;
+                                        if (is_checked2 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Bag,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                CheckboxListTile(
+                                    title: Text("Power Cable"),
+                                    value: is_checked3,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked3 = value!;
+                                        if (is_checked3 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Power Cable,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    initialValue: _bringWithItem,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.list),
+                                      labelText: 'bring item',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        Bitem = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(_bringWithItem + Bitem),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                      printer
+                          ? Column(
+                              children: [
+                                CheckboxListTile(
+                                    title: Text("Printer Cable"),
+                                    value: is_checked1,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked1 = value!;
+                                        if (is_checked1 == true) {
+                                          _bringWithItem = _bringWithItem +
+                                              " Printer Cable,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                CheckboxListTile(
+                                    title: Text("Cartridz"),
+                                    value: is_checked2,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked2 = value!;
+                                        if (is_checked2 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Cartridz,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                CheckboxListTile(
+                                    title: Text("Power Cable"),
+                                    value: is_checked3,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked3 = value!;
+                                        if (is_checked3 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Power Cable,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    initialValue: _bringWithItem,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.list),
+                                      labelText: 'bring item',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        Bitem = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(_bringWithItem + Bitem),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                      computer
+                          ? Column(
+                              children: [
+                                CheckboxListTile(
+                                    title: Text("Charger"),
+                                    value: is_checked1,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked1 = value!;
+                                        if (is_checked1 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Charger,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                CheckboxListTile(
+                                    title: Text("Power Cable"),
+                                    value: is_checked2,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        is_checked2 = value!;
+                                        if (is_checked2 == true) {
+                                          _bringWithItem =
+                                              _bringWithItem + " Power Cable,";
+                                        } else {
+                                          _bringWithItem = "";
+                                        }
+                                      });
+                                    }),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    initialValue: _bringWithItem,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.list),
+                                      labelText: 'bring item',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        Bitem = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(_bringWithItem + Bitem),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                      other
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.devices),
+                                      labelText: 'Enter item',
+                                      hintText: 'laptop/pc',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    onFieldSubmitted: (value) {},
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter a Item Name';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _item = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.list),
+                                      labelText:
+                                          'bring item',
+                                      hintText:
+                                          'Charger, Bag ',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _bringWithItem = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(height: 0, width: 0),
                       const SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -250,6 +561,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                               return;
                             }
                             _formKey.currentState!.save();
+                            _bringWithItem = _bringWithItem + Bitem;
                             Map<String, dynamic> ItemData = {
                               'Pc No': _pcNumber,
                               'Mobile No': widget.mobileno,

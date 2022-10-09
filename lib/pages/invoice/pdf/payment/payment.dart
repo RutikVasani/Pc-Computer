@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/appbarpage.dart';
 import 'upi.dart';
 import 'upi_qrcode.dart';
 
@@ -24,15 +25,7 @@ class PaymentModePage extends StatefulWidget {
 }
 
 class _PaymentModePageState extends State<PaymentModePage> {
-  int _counter = 0;
-
   String? payment;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +172,27 @@ class _PaymentModePageState extends State<PaymentModePage> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 15, bottom: 15),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AppBarPage(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_forward_outlined,
+            size: 30,
+            color: Colors.white,
+          ),
         ),
       ),
     );

@@ -137,25 +137,51 @@ class _SearchDataPageState extends State<SearchDataPage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 15, bottom: 15),
-        child: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PcNoDialogPage(
-                    Mobileno: widget.Mobileno, Name: widget.Name),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15, bottom: 15),
+            child: FloatingActionButton(
+              backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PcNoDialogPage(
+                        Mobileno: widget.Mobileno, Name: widget.Name),
+                  ),
+                );
+              },
+              child: const Icon(
+                Icons.add,
+                size: 30,
+                color: Colors.white,
               ),
-            );
-          },
-          child: const Icon(
-            Icons.add,
-            size: 30,
-            color: Colors.white,
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(right: 15, bottom: 15),
+            child: FloatingActionButton(
+              backgroundColor: const Color.fromARGB(255, 16, 121, 174),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PcNoDialogPage(
+                        Mobileno: widget.Mobileno, Name: widget.Name),
+                  ),
+                );
+              },
+              child: const Icon(
+                Icons.arrow_forward_outlined,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
