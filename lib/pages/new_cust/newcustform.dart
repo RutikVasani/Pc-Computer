@@ -19,7 +19,7 @@ class NewCustFormPage extends StatefulWidget {
 }
 
 class _NewCustFormPageState extends State<NewCustFormPage> {
-  late String _pcNumber;
+  late String _pcNumber = widget.pcno;
   late String _item;
   late String _bringWithItem = "";
   late String _problem;

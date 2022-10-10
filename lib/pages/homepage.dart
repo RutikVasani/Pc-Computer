@@ -1,14 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pc1/models/MobileDialog.dart';
 import 'package:pc1/pages/Daily%20Progress/Delivered%20Pc/deliveredpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Ongoing%20Pc/ongoingpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Repaired%20Pc/repairedpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
-import 'package:pc1/pages/search/search.dart';
 
-class HomePage extends StatelessWidget {
+import 'search/searchdata.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String Mobileno = "";
+  bool _digit = true;
+  bool _search = true;
 
   @override
   Widget build(BuildContext context) {
@@ -75,75 +87,196 @@ class HomePage extends StatelessWidget {
                                   fontWeight: FontWeight.w800)),
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchPage(),
-                              ),
+                        padding: const EdgeInsets.only(
+                            bottom: 10, left: 15, right: 15),
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                Mobileno = value;
+                                if (value == "") {
+                                  _search = true;
+                                } else {
+                                  _search = false;
+                                }
+                                if (value.length == 10) {
+                                  _digit = false;
+                                } else {
+                                  _digit = true;
+                                }
+                              },
                             );
                           },
-                          child: Container(
-                            height: 50,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(5),
-                              ),
+                          decoration: InputDecoration(
+                            labelText: "Search",
+                            hintText: "Search",
+                            fillColor: Colors.white,
+                            labelStyle: TextStyle(color: Colors.white),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 2.0),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    const Icon(
-                                      Icons.search,
-                                      size: 30,
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      "Search",
-                                      style: GoogleFonts.ubuntu(
-                                        fontSize: 30,
-                                        color: const Color.fromARGB(
-                                            255, 16, 121, 174),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const DeliveredPcPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      "View all",
-                                      style: GoogleFonts.ubuntu(
-                                        fontSize: 15,
-                                        color: const Color.fromARGB(
-                                            255, 16, 121, 174),
-                                      ),
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MobileNoDialogPage(
+                                      MobileNo: Mobileno,
                                     ),
                                   ),
-                                )
-                              ],
+                                );
+                              },
+                              icon: Icon(
+                                _digit ? null : Icons.add,
+                                color: Colors.white,
+                              ),
                             ),
+                            border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 3,
+                                )),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      _search
+                          ? const SizedBox(
+                              height: 0,
+                              width: 0,
+                            )
+                          : SingleChildScrollView(
+                              child: SizedBox(
+                                height: MediaQuery.of(context).size.height / 3,
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Customers')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (Mobileno != "") {
+                                      return (snapshot.connectionState ==
+                                              ConnectionState.waiting)
+                                          ? const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            )
+                                          : ListView.builder(
+                                              itemCount:
+                                                  snapshot.data!.docs.length,
+                                              itemBuilder: (context, index) {
+                                                var data = snapshot
+                                                        .data!.docs[index]
+                                                        .data()
+                                                    as Map<String, dynamic>;
+                                                if (data['Mobile No']
+                                                    .toString()
+                                                    .contains(Mobileno
+                                                        .toLowerCase())) {
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SearchDataPage(
+                                                            Mobileno: data[
+                                                                'Mobile No'],
+                                                            Name: data['Name'],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      15,
+                                                                  vertical: 3),
+                                                          child: Container(
+                                                            // color: Colors.red,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          3),
+                                                              child: Column(
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        data[
+                                                                            'Mobile No'],
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                20,
+                                                                            color:
+                                                                                Colors.black),
+                                                                      ),
+                                                                      const Icon(
+                                                                        Icons
+                                                                            .navigate_next,
+                                                                        size:
+                                                                            35,
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topLeft,
+                                                                    child: Text(
+                                                                        data[
+                                                                            'Name']),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const Divider(
+                                                          color: Colors.black,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                } else if (Mobileno.length ==
+                                                        10 &&
+                                                    Mobileno !=
+                                                        data['Mobile No']) {
+                                                  print(Mobileno.length);
+                                                }
+                                                return const SizedBox(
+                                                    height: 0, width: 0);
+                                              },
+                                            );
+                                    } else {
+                                      return const Center(
+                                          child: Text("Search Mobile No.."));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -334,8 +467,8 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 10,
-                                    left: 15, right: 10, bottom: 5),
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 15, right: 10, bottom: 5),
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
@@ -410,7 +543,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );

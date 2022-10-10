@@ -46,7 +46,9 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ItemDataPage(uid: uid,),
+                              builder: (context) => ItemDataPage(
+                                uid: uid,
+                              ),
                             ),
                           );
                         },
@@ -97,57 +99,14 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                                         topRight:
                                                             Radius.circular(10),
                                                         bottomLeft:
-                                                            Radius.circular(10))),
+                                                            Radius.circular(
+                                                                10))),
                                             child: Center(
-                                              child: DropdownButton<String>(
-                                                value: dropdownValue,
-                                                dropdownColor:
-                                                    const Color.fromARGB(
-                                                        255, 16, 121, 174),
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.white),
-                                                underline: const SizedBox(),
-                                                iconSize: 0,
-                                                onChanged: (String? newValue) {
-                                                  setState(() {
-                                                    dropdownValue = newValue!;
-                                                  });
-                                                  docTodayData["Progress"] ==
-                                                      dropdownValue;
-                                                  try {
-                                                    FirebaseFirestore.instance
-                                                        .collection("TodayData")
-                                                        .doc(uid)
-                                                        .update({
-                                                      "Progress": dropdownValue
-                                                    }).then((_) {
-                                                    });
-                                                  } on FirebaseException catch (e) {
-                                                    ScaffoldMessenger.of(context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            e.message.toString()),
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                items: <String>[
-                                                  'Pending',
-                                                  'On Going',
-                                                  'Repaired',
-                                                  'Delivered',
-                                                ].map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
+                                                child: Text(
+                                              "Delivered",
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white),
+                                            )),
                                           ),
                                         ),
                                       ],
@@ -185,10 +144,11 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 1.3,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.3,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10),
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
                                         child: Text(
                                           docTodayData["Problem"],
                                           style: GoogleFonts.poppins(
@@ -203,7 +163,8 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const PdfDataPage(),
+                                            builder: (context) =>
+                                                const PdfDataPage(),
                                           ),
                                         );
                                       },

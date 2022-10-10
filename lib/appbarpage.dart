@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pc1/loginpage.dart';
 import 'package:pc1/models/MobileDialog.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/engineerpage.dart';

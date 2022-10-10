@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pc1/appbarpage.dart';
 import 'package:pc1/models/pcnodialog.dart';
 import 'package:pc1/pages/new_cust/newcustform.dart';
 import 'package:pc1/pages/search/viewPcData.dart';
@@ -149,13 +150,12 @@ class _SearchDataPageState extends State<SearchDataPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PcNoDialogPage(
-                        Mobileno: widget.Mobileno, Name: widget.Name),
+                    builder: (context) => const AppBarPage(),
                   ),
                 );
               },
               child: const Icon(
-                Icons.add,
+                Icons.arrow_forward_outlined,
                 size: 30,
                 color: Colors.white,
               ),
@@ -175,7 +175,7 @@ class _SearchDataPageState extends State<SearchDataPage> {
                 );
               },
               child: const Icon(
-                Icons.arrow_forward_outlined,
+                Icons.add,
                 size: 30,
                 color: Colors.white,
               ),

@@ -4,14 +4,15 @@ import 'package:pc1/models/pcnodialog.dart';
 import 'package:pc1/services/writedata.dart';
 
 class MobileNoDialogPage extends StatefulWidget {
-  const MobileNoDialogPage({Key? key}) : super(key: key);
+  String? MobileNo;
+  MobileNoDialogPage({Key? key, this.MobileNo}) : super(key: key);
 
   @override
   State<MobileNoDialogPage> createState() => _MobileNoDialogPageState();
 }
 
 class _MobileNoDialogPageState extends State<MobileNoDialogPage> {
-  late String Mobileno;
+  late String? Mobileno = widget.MobileNo;
   late String Name;
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,8 @@ class _MobileNoDialogPageState extends State<MobileNoDialogPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: TextField(
+                    child: TextFormField(
+                      initialValue: widget.MobileNo,
                       decoration: const InputDecoration(
                         labelText: 'Mobile No.',
                         border: OutlineInputBorder(
@@ -109,7 +111,7 @@ class _MobileNoDialogPageState extends State<MobileNoDialogPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                PcNoDialogPage(Mobileno: Mobileno, Name: Name),
+                                PcNoDialogPage(Mobileno: Mobileno!, Name: Name),
                           ),
                         );
                       },
