@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pc1/models/MobileDialog.dart';
+import 'package:pc1/models/pcnodialog.dart';
 import 'package:pc1/pages/Daily%20Progress/Delivered%20Pc/deliveredpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Ongoing%20Pc/ongoingpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Repaired%20Pc/repairedpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
+import 'package:pc1/pages/search/viewPcData.dart';
 
 import 'search/searchdata.dart';
 
@@ -19,8 +21,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String Mobileno = "";
-  bool _digit = true;
+  String SearchValue = "";
+  bool _digit = false;
   bool _search = true;
+  bool _pcno = true;
 
   @override
   Widget build(BuildContext context) {
@@ -95,16 +99,21 @@ class _HomePageState extends State<HomePage> {
                           onChanged: (value) {
                             setState(
                               () {
-                                Mobileno = value;
+                                SearchValue = value;
                                 if (value == "") {
                                   _search = true;
                                 } else {
                                   _search = false;
                                 }
                                 if (value.length == 10) {
-                                  _digit = false;
-                                } else {
                                   _digit = true;
+                                } else {
+                                  _digit = false;
+                                }
+                                if (value.length < 5) {
+                                  _pcno = true;
+                                } else {
+                                  _pcno = false;
                                 }
                               },
                             );
@@ -129,13 +138,13 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MobileNoDialogPage(
-                                      MobileNo: Mobileno,
+                                      MobileNo: SearchValue,
                                     ),
                                   ),
                                 );
                               },
                               icon: Icon(
-                                _digit ? null : Icons.add,
+                                _digit ? Icons.add : null,
                                 color: Colors.white,
                               ),
                             ),
@@ -154,129 +163,264 @@ class _HomePageState extends State<HomePage> {
                               height: 0,
                               width: 0,
                             )
-                          : SingleChildScrollView(
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 3,
-                                child: StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('Customers')
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (Mobileno != "") {
-                                      return (snapshot.connectionState ==
-                                              ConnectionState.waiting)
-                                          ? const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            )
-                                          : ListView.builder(
-                                              itemCount:
-                                                  snapshot.data!.docs.length,
-                                              itemBuilder: (context, index) {
-                                                var data = snapshot
-                                                        .data!.docs[index]
-                                                        .data()
-                                                    as Map<String, dynamic>;
-                                                if (data['Mobile No']
-                                                    .toString()
-                                                    .contains(Mobileno
-                                                        .toLowerCase())) {
-                                                  return InkWell(
-                                                    onTap: () {
-                                                      Navigator.pop(context);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              SearchDataPage(
-                                                            Mobileno: data[
-                                                                'Mobile No'],
-                                                            Name: data['Name'],
+                          : _pcno
+                              ? SingleChildScrollView(
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 3,
+                                    child: StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Customers')
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (SearchValue != "") {
+                                          return (snapshot.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                )
+                                              : ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var docMobile = snapshot
+                                                            .data!.docs[index]
+                                                            .data()
+                                                        as Map<String, dynamic>;
+                                                    String uid = snapshot
+                                                        .data!.docs[index].id;
+                                                    print("Search Value: ");
+                                                    print(docMobile['All Pc']
+                                                        .toString()
+                                                        .contains(SearchValue
+                                                            .toLowerCase()));
+                                                    if (docMobile['All Pc']
+                                                        .toString()
+                                                        .contains(SearchValue
+                                                            .toLowerCase())) {
+                                                      return SingleChildScrollView(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: SizedBox(
+                                                            height: 50,
+                                                            child:
+                                                                StreamBuilder(
+                                                                    stream: FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            'Customers')
+                                                                        .doc(
+                                                                            uid)
+                                                                        .collection(
+                                                                            'PcNumber')
+                                                                        .snapshots(),
+                                                                    builder: (__,
+                                                                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                              .hasData &&
+                                                                          snapshot.data !=
+                                                                              null) {
+                                                                        if (snapshot
+                                                                            .data!
+                                                                            .docs
+                                                                            .isNotEmpty) {
+                                                                          return ListView.builder(
+                                                                              itemCount: snapshot.data!.docs.length,
+                                                                              itemBuilder: (___, int index1) {
+                                                                                Map<String, dynamic> docPcData = snapshot.data!.docs[index1].data();
+                                                                                String PcNoid = snapshot.data!.docs[index1].id;
+                                                                                if (docPcData["Pc No"].toString().contains(SearchValue.toLowerCase())) {
+                                                                                  return InkWell(
+                                                                                    onTap: () {
+                                                                                      Navigator.push(
+                                                                                        context,
+                                                                                        MaterialPageRoute(
+                                                                                          builder: (context) => ViewPcDataPage(Mobileno: docMobile["Mobile No"], Name: docMobile["Name"], Pcno: docPcData["Pc No"]),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                    child: Container(
+                                                                                      height: 45,
+                                                                                      color: Colors.amber,
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                                                                        child: Row(
+                                                                                          children: [
+                                                                                            Text(
+                                                                                              "Pc No: ",
+                                                                                              style: TextStyle(fontSize: 23, color: Colors.black, fontWeight: FontWeight.w600),
+                                                                                            ),
+                                                                                            Text(
+                                                                                              docPcData["Pc No"],
+                                                                                              style: TextStyle(fontSize: 23, color: Colors.blue.shade800, fontWeight: FontWeight.w600),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                } else {
+                                                                                  return const SizedBox(
+                                                                                    height: 0,
+                                                                                    width: 0,
+                                                                                  );
+                                                                                }
+                                                                              });
+                                                                        } else {
+                                                                          return const Center(
+                                                                            child:
+                                                                                Text("Document aren't available"),
+                                                                          );
+                                                                        }
+                                                                      } else {
+                                                                        return const Center(
+                                                                          child:
+                                                                              Text("Getting Error"),
+                                                                        );
+                                                                      }
+                                                                    }),
                                                           ),
                                                         ),
                                                       );
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
+                                                    } else {
+                                                      return const SizedBox(
+                                                          height: 0, width: 0);
+                                                    }
+                                                  },
+                                                );
+                                        } else {
+                                          return const Center(
+                                              child: Text("Search Pc No.."));
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                )
+                              : SingleChildScrollView(
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 3,
+                                    child: StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Customers')
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (SearchValue != "") {
+                                          return (snapshot.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                )
+                                              : ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      (context, index1) {
+                                                    var data = snapshot
+                                                            .data!.docs[index1]
+                                                            .data()
+                                                        as Map<String, dynamic>;
+                                                    if (data['Mobile No']
+                                                        .toString()
+                                                        .contains(SearchValue
+                                                            .toLowerCase())) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  SearchDataPage(
+                                                                Mobileno: data[
+                                                                    'Mobile No'],
+                                                                Name: data[
+                                                                    'Name'],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsets
                                                                       .symmetric(
                                                                   horizontal:
                                                                       15,
                                                                   vertical: 3),
-                                                          child: Container(
-                                                            // color: Colors.red,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
+                                                              child: Container(
+                                                                // color: Colors.red,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
                                                                           .symmetric(
                                                                       vertical:
                                                                           3),
-                                                              child: Column(
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
+                                                                  child: Column(
                                                                     children: [
-                                                                      Text(
-                                                                        data[
-                                                                            'Mobile No'],
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style: GoogleFonts.poppins(
-                                                                            fontSize:
-                                                                                20,
-                                                                            color:
-                                                                                Colors.black),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            data['Mobile No'],
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style:
+                                                                                GoogleFonts.poppins(fontSize: 20, color: Colors.black),
+                                                                          ),
+                                                                          const Icon(
+                                                                            Icons.navigate_next,
+                                                                            size:
+                                                                                35,
+                                                                          )
+                                                                        ],
                                                                       ),
-                                                                      const Icon(
-                                                                        Icons
-                                                                            .navigate_next,
-                                                                        size:
-                                                                            35,
-                                                                      )
+                                                                      Align(
+                                                                        alignment:
+                                                                            Alignment.topLeft,
+                                                                        child: Text(
+                                                                            data['Name']),
+                                                                      ),
                                                                     ],
                                                                   ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topLeft,
-                                                                    child: Text(
-                                                                        data[
-                                                                            'Name']),
-                                                                  ),
-                                                                ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
+                                                            const Divider(
+                                                              color:
+                                                                  Colors.black,
+                                                            )
+                                                          ],
                                                         ),
-                                                        const Divider(
-                                                          color: Colors.black,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  );
-                                                } else if (Mobileno.length ==
-                                                        10 &&
-                                                    Mobileno !=
-                                                        data['Mobile No']) {
-                                                  print(Mobileno.length);
-                                                }
-                                                return const SizedBox(
-                                                    height: 0, width: 0);
-                                              },
-                                            );
-                                    } else {
-                                      return const Center(
-                                          child: Text("Search Mobile No.."));
-                                    }
-                                  },
+                                                      );
+                                                    } else if (SearchValue
+                                                                .length ==
+                                                            10 &&
+                                                        SearchValue !=
+                                                            data['Mobile No']) {
+                                                      print(SearchValue.length);
+                                                    }
+                                                    return const SizedBox(
+                                                        height: 0, width: 0);
+                                                  },
+                                                );
+                                        } else {
+                                          return const Center(
+                                              child:
+                                                  Text("Search Mobile No.."));
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

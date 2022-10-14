@@ -96,13 +96,23 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                   .collection("TodayData")
                                                   .doc(uid)
                                                   .update({
-                                                "Progress": docTodayData["Progress"],
+                                                "Progress":
+                                                    docTodayData["Progress"],
                                                 "Uid": uid
                                               }).then((_) {
-                                                print(
-                                                    "success!" + docTodayData["Progress"]);
+                                                print("success!" +
+                                                    docTodayData["Progress"]);
                                                 print(uid);
                                               });
+                                              FirebaseFirestore.instance
+                                                  .collection("Customers")
+                                                  .doc(
+                                                      docTodayData["Mobile No"])
+                                                  .collection("PcNumber")
+                                                  .doc(docTodayData["Pc No"])
+                                                  .collection("Data")
+                                                  .doc(uid)
+                                                  .set(docTodayData);
                                             } on FirebaseException catch (e) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
@@ -118,7 +128,8 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                               color: Colors.blue.shade200,
                                             ),
                                             child: const Icon(

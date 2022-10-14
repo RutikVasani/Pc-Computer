@@ -104,6 +104,14 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                     docTodayData["Progress"]);
                                                 print(uid);
                                               });
+                                              FirebaseFirestore.instance
+                                                  .collection("Customers")
+                                                  .doc(docTodayData["Mobile No"])
+                                                  .collection("PcNumber")
+                                                  .doc(docTodayData["Pc No"])
+                                                  .collection("Data")
+                                                  .doc(uid)
+                                                  .update(docTodayData);
                                             } on FirebaseException catch (e) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(

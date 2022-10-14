@@ -83,6 +83,18 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                           'Pc No': Pcno,
                           'Date': DateTime.now(),
                         };
+                        FirebaseFirestore.instance
+                            .collection('Customers')
+                            .doc(widget.Mobileno)
+                            .update(
+                          {
+                            "All Pc": FieldValue.arrayUnion(
+                              [
+                                {"Pc No": Pcno}
+                              ],
+                            ),
+                          },
+                        );
                         WriteData()
                             .addPc(widget.Mobileno, Pcno, PcNumData, context)
                             .then(

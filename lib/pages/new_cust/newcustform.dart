@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
@@ -471,10 +472,8 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                                   child: TextFormField(
                                     decoration: const InputDecoration(
                                       prefixIcon: Icon(Icons.list),
-                                      labelText:
-                                          'bring item',
-                                      hintText:
-                                          'Charger, Bag ',
+                                      labelText: 'bring item',
+                                      hintText: 'Charger, Bag ',
                                       border: OutlineInputBorder(),
                                     ),
                                     onChanged: (value) {
