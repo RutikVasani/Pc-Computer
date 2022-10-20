@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,23 +93,123 @@ class _ItemDataPageState extends State<ItemDataPage> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "Cost: ",
-                                style: GoogleFonts.poppins(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                docItemData["Cost"],
-                                style: GoogleFonts.poppins(
-                                  color: Colors.grey,
-                                  fontSize: 18,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Expanded(
+                                      child: AlertDialog(
+                                        title: Text('Update Cost'),
+                                        content: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: TextFormField(
+                                              initialValue: docItemData["Cost"],
+                                              decoration: const InputDecoration(
+                                                labelText: 'Cost.',
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15))),
+                                                prefixIcon:
+                                                    Icon(Icons.currency_rupee),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  docItemData["Cost"] = value;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        actions: [
+                                          FlatButton(
+                                            textColor: Colors.black,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('CANCEL'),
+                                          ),
+                                          FlatButton(
+                                            textColor: Colors.black,
+                                            onPressed: () {
+                                              try {
+                                                FirebaseFirestore.instance
+                                                    .collection('TodayData')
+                                                    .doc(docItemData["Uid"])
+                                                    .update({
+                                                  "Cost": docItemData["Cost"]
+                                                }).then(
+                                                  (result) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content:
+                                                            Text("Cost Update"),
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } on FirebaseException catch (e) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                        e.message.toString()),
+                                                    backgroundColor: Colors.red,
+                                                  ),
+                                                );
+                                              }
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('ACCEPT'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Cost: ",
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          docItemData["Cost"],
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.grey,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
@@ -146,13 +248,94 @@ class _ItemDataPageState extends State<ItemDataPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            docItemData["Problem"],
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey,
-                              fontSize: 16,
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Expanded(
+                                  child: AlertDialog(
+                                    title: Text('Update Problem'),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: TextFormField(
+                                          initialValue: docItemData["Problem"],
+                                          decoration: const InputDecoration(
+                                            labelText: 'Problem.',
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15))),
+                                            prefixIcon:
+                                                Icon(Icons.currency_rupee),
+                                          ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              docItemData["Problem"] = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('CANCEL'),
+                                      ),
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () {
+                                          try {
+                                            FirebaseFirestore.instance
+                                                .collection('TodayData')
+                                                .doc(docItemData["Uid"])
+                                                .update({
+                                              "Problem": docItemData["Problem"]
+                                            }).then(
+                                              (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content:
+                                                        Text("Problem Update"),
+                                                    backgroundColor: Colors.red,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } on FirebaseException catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content:
+                                                    Text(e.message.toString()),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              docItemData["Problem"],
+                              style: GoogleFonts.poppins(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
@@ -175,16 +358,97 @@ class _ItemDataPageState extends State<ItemDataPage> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            docItemData["Remarks"] == ""
-                                ? 00
-                                : docItemData["Remarks"],
-                            textAlign: TextAlign.start,
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey,
-                              fontSize: 16,
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Expanded(
+                                  child: AlertDialog(
+                                    title: Text('Update Remarks'),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: TextFormField(
+                                          initialValue: docItemData["Remarks"],
+                                          decoration: const InputDecoration(
+                                            labelText: 'Remarks.',
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15))),
+                                            prefixIcon:
+                                                Icon(Icons.currency_rupee),
+                                          ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              docItemData["Remarks"] = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('CANCEL'),
+                                      ),
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () {
+                                          try {
+                                            FirebaseFirestore.instance
+                                                .collection('TodayData')
+                                                .doc(docItemData["Uid"])
+                                                .update({
+                                              "Remarks": docItemData["Remarks"]
+                                            }).then(
+                                              (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content:
+                                                        Text("Remarks Update"),
+                                                    backgroundColor: Colors.red,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } on FirebaseException catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content:
+                                                    Text(e.message.toString()),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              docItemData["Remarks"] == ""
+                                  ? 00
+                                  : docItemData["Remarks"],
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.poppins(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),

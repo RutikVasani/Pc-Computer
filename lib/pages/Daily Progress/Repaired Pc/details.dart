@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/invoice/pdf/payment/payment.dart';
 import 'package:pc1/pages/itemdata.dart';
@@ -99,6 +100,12 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                   .update({
                                                 "Progress":
                                                     docTodayData["Progress"],
+                                                "Delivered Time":
+                                                    DateFormat.jm()
+                                                        .format(DateTime.now()),
+                                                "Delivered Date":
+                                                    DateFormat.yMEd()
+                                                        .format(DateTime.now())
                                               }).then((_) {
                                                 print("success!" +
                                                     docTodayData["Progress"]);
@@ -106,7 +113,8 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                               });
                                               FirebaseFirestore.instance
                                                   .collection("Customers")
-                                                  .doc(docTodayData["Mobile No"])
+                                                  .doc(
+                                                      docTodayData["Mobile No"])
                                                   .collection("PcNumber")
                                                   .doc(docTodayData["Pc No"])
                                                   .collection("Data")
@@ -174,7 +182,15 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                         .collection("TodayData")
                                                         .doc(uid)
                                                         .update({
-                                                      "Progress": dropdownValue
+                                                      "Progress": dropdownValue,
+                                                      "Delivered Time":
+                                                          DateFormat.jm()
+                                                              .format(DateTime
+                                                                  .now()),
+                                                      "Delivered Date":
+                                                          DateFormat.yMEd()
+                                                              .format(DateTime
+                                                                  .now())
                                                     }).then((_) {
                                                       print("success!" +
                                                           dropdownValue);
@@ -192,23 +208,6 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                       ),
                                                     );
                                                   }
-                                                  Navigator.pop(context);
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          PaymentModePage(
-                                                        cost: docTodayData[
-                                                            "Cost"],
-                                                        uid: uid,
-                                                        MobileNo: docTodayData[
-                                                            "Mobile No"],
-                                                        PcNo: docTodayData[
-                                                            "Pc No"],
-                                                        docData: docTodayData,
-                                                      ),
-                                                    ),
-                                                  );
                                                 },
                                                 items: <String>[
                                                   'Pending',

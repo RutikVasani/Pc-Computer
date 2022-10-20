@@ -18,7 +18,10 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 211, 244, 247),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("TodayData").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("TodayData")
+            .orderBy('Delivered Date' , descending: true)
+            .snapshots(),
         builder:
             (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
@@ -175,6 +178,43 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: const Text(
+                                          "Delivered:",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            docTodayData["Delivered Time"] +
+                                                ", " as String,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.grey),
+                                          ),
+                                          Text(
+                                            docTodayData["Delivered Date"]
+                                                as String,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 10),
                               ],
