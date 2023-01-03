@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -48,11 +50,45 @@ class WriteData {
   }
 
   Future<void> addPcData(
+    PcNo,
     ItemData,
     BuildContext context,
   ) async {
     try {
-      FirebaseFirestore.instance.collection('TodayData').doc().set(ItemData);
+      FirebaseFirestore.instance.collection('TodayData').doc(PcNo).set(ItemData);
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message.toString()),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> addprogress(PcNo, progress, BuildContext context) async {
+    try {
+      FirebaseFirestore.instance
+          .collection(progress)
+          .doc(PcNo)
+          .set({"progerss": progress});
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message.toString()),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> removeprogress(
+    PcNo,
+    progress,
+    BuildContext context,
+  ) async {
+    try {
+      FirebaseFirestore.instance.collection(progress).doc(PcNo).delete();
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

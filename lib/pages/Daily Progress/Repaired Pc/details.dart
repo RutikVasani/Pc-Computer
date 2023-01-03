@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/invoice/pdf/payment/payment.dart';
 import 'package:pc1/pages/itemdata.dart';
+import 'package:pc1/services/writedata.dart';
 
 class RepairedPcDatails extends StatefulWidget {
   const RepairedPcDatails({Key? key}) : super(key: key);
@@ -111,6 +112,14 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                     docTodayData["Progress"]);
                                                 print(uid);
                                               });
+                                              WriteData().addprogress(
+                                                  docTodayData["Pc No"],
+                                                  "Delivered",
+                                                  context);
+                                              WriteData().removeprogress(
+                                                  docTodayData["Pc No"],
+                                                  "Repaired",
+                                                  context);
                                               FirebaseFirestore.instance
                                                   .collection("Customers")
                                                   .doc(
@@ -208,6 +217,14 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                       ),
                                                     );
                                                   }
+                                                  WriteData().addprogress(
+                                                      docTodayData["Pc No"],
+                                                      dropdownValue,
+                                                      context);
+                                                  WriteData().removeprogress(
+                                                      docTodayData["Pc No"],
+                                                      "Repaired",
+                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',

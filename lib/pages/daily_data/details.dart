@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/itemdata.dart';
+import 'package:pc1/services/writedata.dart';
 
 class ProgressPage extends StatefulWidget {
   const ProgressPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class ProgressPage extends StatefulWidget {
 }
 
 class _ProgressPageState extends State<ProgressPage> {
+  String? _Progress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +42,15 @@ class _ProgressPageState extends State<ProgressPage> {
                         horizontal: 15, vertical: 10),
                     child: InkWell(
                       onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ItemDataPage(uid: uid,),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ItemDataPage(
+                              uid: uid,
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -61,8 +65,8 @@ class _ProgressPageState extends State<ProgressPage> {
                                         topRight: Radius.circular(10),
                                         topLeft: Radius.circular(10))),
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 15),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -98,14 +102,16 @@ class _ProgressPageState extends State<ProgressPage> {
                                           child: Center(
                                             child: DropdownButton<String>(
                                               value: dropdownValue,
-                                              dropdownColor: const Color.fromARGB(
-                                                  255, 16, 121, 174),
+                                              dropdownColor:
+                                                  const Color.fromARGB(
+                                                      255, 16, 121, 174),
                                               style: GoogleFonts.poppins(
                                                   color: Colors.white),
                                               underline: const SizedBox(),
                                               iconSize: 0,
                                               onChanged: (String? newValue) {
                                                 setState(() {
+                                                  _Progress = dropdownValue;
                                                   dropdownValue = newValue!;
                                                 });
                                                 docTodayData["Progress"] ==
@@ -127,10 +133,19 @@ class _ProgressPageState extends State<ProgressPage> {
                                                     SnackBar(
                                                       content: Text(
                                                           e.message.toString()),
-                                                      backgroundColor: Colors.red,
+                                                      backgroundColor:
+                                                          Colors.red,
                                                     ),
                                                   );
                                                 }
+                                                WriteData().addprogress(
+                                                    docTodayData["Pc No"],
+                                                    dropdownValue,
+                                                    context);
+                                                WriteData().removeprogress(
+                                                    docTodayData["Pc No"],
+                                                    _Progress,
+                                                    context);
                                               },
                                               items: <String>[
                                                 'Pending',

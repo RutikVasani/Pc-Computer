@@ -573,7 +573,9 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                               'Progress': "Pending",
                               'Date': DateTime.now(),
                             };
-                            WriteData().addPcData(ItemData, context).then(
+                            WriteData()
+                                .addprogress(_pcNumber, "Pending", context);
+                            WriteData().addPcData(ItemData, _pcNumber ,context).then(
                               (result) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

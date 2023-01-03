@@ -130,15 +130,15 @@ class _ItemDataPageState extends State<ItemDataPage> {
                                           ),
                                         ),
                                         actions: [
-                                          FlatButton(
-                                            textColor: Colors.black,
+                                          TextButton(
+                                            // textColor: Colors.black,
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
                                             child: Text('CANCEL'),
                                           ),
-                                          FlatButton(
-                                            textColor: Colors.black,
+                                          TextButton(
+                                            // textColor: Colors.black,
                                             onPressed: () {
                                               try {
                                                 FirebaseFirestore.instance
@@ -280,15 +280,15 @@ class _ItemDataPageState extends State<ItemDataPage> {
                                       ),
                                     ),
                                     actions: [
-                                      FlatButton(
-                                        textColor: Colors.black,
+                                      TextButton(
+                                        // textColor: Colors.black,
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
                                         child: Text('CANCEL'),
                                       ),
-                                      FlatButton(
-                                        textColor: Colors.black,
+                                      TextButton(
+                                        // textColor: Colors.black,
                                         onPressed: () {
                                           try {
                                             FirebaseFirestore.instance
@@ -390,15 +390,15 @@ class _ItemDataPageState extends State<ItemDataPage> {
                                       ),
                                     ),
                                     actions: [
-                                      FlatButton(
-                                        textColor: Colors.black,
+                                      TextButton(
+                                        // textColor: Colors.black,
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
                                         child: Text('CANCEL'),
                                       ),
-                                      FlatButton(
-                                        textColor: Colors.black,
+                                      TextButton(
+                                        // textColor: Colors.black,
                                         onPressed: () {
                                           try {
                                             FirebaseFirestore.instance
