@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pc1/models/MobileDialog.dart';
-import 'package:pc1/models/pcnodialog.dart';
 import 'package:pc1/pages/Daily%20Progress/Delivered%20Pc/deliveredpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Ongoing%20Pc/ongoingpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Repaired%20Pc/repairedpc.dart';
 import 'package:pc1/pages/Daily%20Progress/Today%20All/todayallpc.dart';
 import 'package:pc1/pages/search/viewPcData.dart';
-
 import 'search/searchdata.dart';
 
 class HomePage extends StatefulWidget {
@@ -449,6 +447,18 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                           onTap: () {
+                            // print("hiiiiiiiiiiiiiii");
+                            // print(FirebaseFirestore.instance
+                            //     .collection('TodayData')
+                            //     .where(FieldPath.documentId,
+                            //         isEqualTo: "Pending")
+                            //     .get()
+                            //     .then((event) {
+                            //   if (event.docs.isNotEmpty) {
+                            //     List<QueryDocumentSnapshot<Map<String, dynamic>>> documentData = event.docs;
+                            //   }
+                            // }).catchError(
+                            //         (e) => print("error fetching data: $e")));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

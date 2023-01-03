@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/itemdata.dart';
+import 'package:pc1/services/writedata.dart';
 
 class AllPcDetails extends StatefulWidget {
   const AllPcDetails({Key? key}) : super(key: key);
@@ -94,7 +95,7 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection("TodayData")
-                                                  .doc(uid)
+                                                  .doc(docTodayData["Pc No"])
                                                   .update({
                                                 "Progress":
                                                     docTodayData["Progress"],
@@ -104,6 +105,14 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                     docTodayData["Progress"]);
                                                 print(uid);
                                               });
+                                              WriteData().addprogress(
+                                                  docTodayData["Pc No"],
+                                                  "On Going",
+                                                  context);
+                                              WriteData().removeprogress(
+                                                  docTodayData["Pc No"],
+                                                  "Pending",
+                                                  context);
                                               FirebaseFirestore.instance
                                                   .collection("Customers")
                                                   .doc(
@@ -194,6 +203,14 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                       ),
                                                     );
                                                   }
+                                                  WriteData().addprogress(
+                                                      docTodayData["Pc No"],
+                                                      dropdownValue,
+                                                      context);
+                                                  WriteData().removeprogress(
+                                                      docTodayData["Pc No"],
+                                                      "Pending",
+                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',

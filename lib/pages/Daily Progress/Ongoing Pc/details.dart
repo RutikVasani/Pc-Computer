@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/itemdata.dart';
+import 'package:pc1/services/writedata.dart';
 
 class OnGoingPcDatails extends StatefulWidget {
   const OnGoingPcDatails({Key? key}) : super(key: key);
@@ -113,6 +114,14 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                 ),
                                               );
                                             }
+                                            WriteData().addprogress(
+                                                docTodayData["Pc No"],
+                                                "Repaired",
+                                                context);
+                                            WriteData().removeprogress(
+                                                docTodayData["Pc No"],
+                                                "On Going",
+                                                context);
                                           },
                                           icon: Container(
                                             width: 40,
@@ -183,6 +192,14 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                       ),
                                                     );
                                                   }
+                                                  WriteData().addprogress(
+                                                      docTodayData["Pc No"],
+                                                      dropdownValue,
+                                                      context);
+                                                  WriteData().removeprogress(
+                                                      docTodayData["Pc No"],
+                                                      "On Going",
+                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',
