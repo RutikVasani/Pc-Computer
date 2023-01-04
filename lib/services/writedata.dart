@@ -71,7 +71,7 @@ class WriteData {
       FirebaseFirestore.instance
           .collection(progress)
           .doc(PcNo)
-          .set({"progerss": progress});
+          .set({"progress": progress});
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

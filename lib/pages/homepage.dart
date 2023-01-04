@@ -447,18 +447,6 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // print("hiiiiiiiiiiiiiii");
-                            // print(FirebaseFirestore.instance
-                            //     .collection('TodayData')
-                            //     .where(FieldPath.documentId,
-                            //         isEqualTo: "Pending")
-                            //     .get()
-                            //     .then((event) {
-                            //   if (event.docs.isNotEmpty) {
-                            //     List<QueryDocumentSnapshot<Map<String, dynamic>>> documentData = event.docs;
-                            //   }
-                            // }).catchError(
-                            //         (e) => print("error fetching data: $e")));
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -518,6 +506,77 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "item :",
+                                        style: GoogleFonts.ubuntu(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        child: StreamBuilder(
+                                          stream: FirebaseFirestore.instance
+                                              .collection("Pending")
+                                              .snapshots(),
+                                          builder: (__,
+                                              AsyncSnapshot<
+                                                      QuerySnapshot<
+                                                          Map<String, dynamic>>>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data != null) {
+                                              if (snapshot
+                                                  .data!.docs.isNotEmpty) {
+                                                int _pendingItem =
+                                                    snapshot.data!.docs.length;
+                                                return _pendingItem == 0
+                                                    ? Text("0",
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white))
+                                                    : Text('${_pendingItem}',
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white));
+                                                // print(snapshot.data!.docs.length);
+                                              }
+                                            }
+                                            return SizedBox(
+                                              height: 0,
+                                              width: 0,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 10),
                             ]),
                           ),
@@ -575,6 +634,77 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "item :",
+                                        style: GoogleFonts.ubuntu(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        child: StreamBuilder(
+                                          stream: FirebaseFirestore.instance
+                                              .collection("On Going")
+                                              .snapshots(),
+                                          builder: (__,
+                                              AsyncSnapshot<
+                                                      QuerySnapshot<
+                                                          Map<String, dynamic>>>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data != null) {
+                                              if (snapshot
+                                                  .data!.docs.isNotEmpty) {
+                                                int _pendingItem =
+                                                    snapshot.data!.docs.length;
+                                                return _pendingItem == 0
+                                                    ? Text("0",
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white))
+                                                    : Text('${_pendingItem}',
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white));
+                                                // print(snapshot.data!.docs.length);
+                                              }
+                                            }
+                                            return SizedBox(
+                                              height: 0,
+                                              width: 0,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 15),
                             ]),
@@ -635,6 +765,77 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "item :",
+                                        style: GoogleFonts.ubuntu(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        child: StreamBuilder(
+                                          stream: FirebaseFirestore.instance
+                                              .collection("Repaired")
+                                              .snapshots(),
+                                          builder: (__,
+                                              AsyncSnapshot<
+                                                      QuerySnapshot<
+                                                          Map<String, dynamic>>>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data != null) {
+                                              if (snapshot
+                                                  .data!.docs.isNotEmpty) {
+                                                int _pendingItem =
+                                                    snapshot.data!.docs.length;
+                                                return _pendingItem == 0
+                                                    ? Text("0",
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white))
+                                                    : Text('${_pendingItem}',
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white));
+                                                // print(snapshot.data!.docs.length);
+                                              }
+                                            }
+                                            return SizedBox(
+                                              height: 0,
+                                              width: 0,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 15),
                             ]),
                           ),
@@ -688,6 +889,77 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "item :",
+                                        style: GoogleFonts.ubuntu(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        child: StreamBuilder(
+                                          stream: FirebaseFirestore.instance
+                                              .collection("Delivered")
+                                              .snapshots(),
+                                          builder: (__,
+                                              AsyncSnapshot<
+                                                      QuerySnapshot<
+                                                          Map<String, dynamic>>>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data != null) {
+                                              if (snapshot
+                                                  .data!.docs.isNotEmpty) {
+                                                int _pendingItem =
+                                                    snapshot.data!.docs.length;
+                                                return _pendingItem == 0
+                                                    ? Text("0",
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white))
+                                                    : Text('${_pendingItem}',
+                                                        style:
+                                                            GoogleFonts.ubuntu(
+                                                                fontSize: 25,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white));
+                                                // print(snapshot.data!.docs.length);
+                                              }
+                                            }
+                                            return SizedBox(
+                                              height: 0,
+                                              width: 0,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 10),
                             ]),

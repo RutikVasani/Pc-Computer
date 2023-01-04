@@ -15,7 +15,7 @@ class PcNoDialogPage extends StatefulWidget {
 }
 
 class _PcNoDialogPageState extends State<PcNoDialogPage> {
-  late String Pcno;
+  var Pcno;
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +46,48 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Pc No',
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        prefixIcon: Icon(Icons.person),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: Container(
+                        width: 300,
+                        height: 50,
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("Pc No")
+                              .snapshots(),
+                          builder: (__,
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (snapshot.hasData && snapshot.data != null) {
+                              if (snapshot.data!.docs.isNotEmpty) {
+                                int _pcno = snapshot.data!.docs.length;
+                                Map<String, dynamic> docTodayData =
+                                    snapshot.data!.docs[0].data();
+                                if (docTodayData.isNotEmpty) {
+                                  Pcno = '${docTodayData["Pc No"]}';
+                                  return TextFormField(
+                                    initialValue: '${docTodayData["Pc No"]}',
+                                    onChanged: (value) {
+                                      setState(() {
+                                        print("jiiiiiiiiiiii");
+                                        print(value);
+                                        Pcno = value;
+                                      });
+                                    },
+                                  );
+                                }
+                              }
+                            }
+                            return SizedBox(
+                              height: 0,
+                              width: 0,
+                            );
+                          },
+                        ),
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          Pcno = value;
-                        });
-                      },
                     ),
                   ),
                 ),
@@ -95,6 +121,15 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                             ),
                           },
                         );
+                        var c = int.parse(Pcno);
+                        print("C + 1");
+                        print(c + 1);
+                        print("Pc No");
+                        print(Pcno);
+                        FirebaseFirestore.instance
+                            .collection("Pc No")
+                            .doc('Pc No')
+                            .set({'Pc No': c + 1});
                         WriteData()
                             .addPc(widget.Mobileno, Pcno, PcNumData, context)
                             .then(
@@ -110,11 +145,12 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NewCustFormPage(
-                                    mobileno: widget.Mobileno,
-                                    name: widget.Name,
-                                    pcno: Pcno,
-                                  )),
+                            builder: (context) => NewCustFormPage(
+                              mobileno: widget.Mobileno,
+                              name: widget.Name,
+                              pcno: Pcno!,
+                            ),
+                          ),
                         );
                       },
                     ),

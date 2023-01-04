@@ -95,7 +95,7 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection("TodayData")
-                                                  .doc(uid)
+                                                  .doc(docTodayData["PcNo"])
                                                   .update({
                                                 "Progress":
                                                     docTodayData["Progress"],
