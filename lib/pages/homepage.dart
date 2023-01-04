@@ -531,7 +531,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Container(
                                         child: StreamBuilder(
                                           stream: FirebaseFirestore.instance
-                                              .collection("On going")
+                                              .collection("Pending")
                                               .snapshots(),
                                           builder: (__,
                                               AsyncSnapshot<
@@ -544,7 +544,7 @@ class _HomePageState extends State<HomePage> {
                                                   .data!.docs.isNotEmpty) {
                                                 int _pendingItem =
                                                     snapshot.data!.docs.length;
-                                                return _pendingItem != 0
+                                                return _pendingItem == 0
                                                     ? Text("0",
                                                         style:
                                                             GoogleFonts.ubuntu(

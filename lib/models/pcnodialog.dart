@@ -15,8 +15,7 @@ class PcNoDialogPage extends StatefulWidget {
 }
 
 class _PcNoDialogPageState extends State<PcNoDialogPage> {
-  late String Pcno;
-  String Pcno1 = "0";
+  var Pcno;
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +66,15 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                                 int _pcno = snapshot.data!.docs.length;
                                 Map<String, dynamic> docTodayData =
                                     snapshot.data!.docs[0].data();
-                                // Pcno = docTodayData;
                                 if (docTodayData.isNotEmpty) {
+                                  Pcno = '${docTodayData["Pc No"]}';
                                   return TextFormField(
-                                    initialValue:
-                                        '${docTodayData["Pc No"] ?? "0"}',
+                                    initialValue: '${docTodayData["Pc No"]}',
                                     onChanged: (value) {
                                       setState(() {
+                                        print("jiiiiiiiiiiii");
+                                        print(value);
                                         Pcno = value;
-                                        Pcno1 = value;
                                       });
                                     },
                                   );
@@ -100,55 +99,59 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                     child: ElevatedButton(
                       child: const Text("Submit"),
                       onPressed: () {
-                        // Navigator.pop(context);
-                        // var PcNumId = FirebaseFirestore.instance
-                        //     .collection("Customers")
-                        //     .doc(widget.Mobileno)
-                        //     .collection('Pc Number')
-                        //     .doc(Pcno);
-                        // Map<String, dynamic> PcNumData = {
-                        //   'Pc No': Pcno,
-                        //   'Date': DateTime.now(),
-                        // };
-                        // FirebaseFirestore.instance
-                        //     .collection('Customers')
-                        //     .doc(widget.Mobileno)
-                        //     .update(
-                        //   {
-                        //     "All Pc": FieldValue.arrayUnion(
-                        //       [
-                        //         {"Pc No": Pcno}
-                        //       ],
-                        //     ),
-                        //   },
-                        // );
-                        var c = int.parse(Pcno1);
+                        Navigator.pop(context);
+                        var PcNumId = FirebaseFirestore.instance
+                            .collection("Customers")
+                            .doc(widget.Mobileno)
+                            .collection('Pc Number')
+                            .doc(Pcno);
+                        Map<String, dynamic> PcNumData = {
+                          'Pc No': Pcno,
+                          'Date': DateTime.now(),
+                        };
+                        FirebaseFirestore.instance
+                            .collection('Customers')
+                            .doc(widget.Mobileno)
+                            .update(
+                          {
+                            "All Pc": FieldValue.arrayUnion(
+                              [
+                                {"Pc No": Pcno}
+                              ],
+                            ),
+                          },
+                        );
+                        var c = int.parse(Pcno);
+                        print("C + 1");
                         print(c + 1);
-                        // FirebaseFirestore.instance
-                        //     .collection("Pc No")
-                        //     .doc('Pc No')
-                        //     .set({'Pc No': Pcno1});
-                        // WriteData()
-                        //     .addPc(widget.Mobileno, Pcno, PcNumData, context)
-                        //     .then(
-                        //   (result) {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       const SnackBar(
-                        //         content: Text("Pc added"),
-                        //         backgroundColor: Colors.red,
-                        //       ),
-                        //     );
-                        //   },
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => NewCustFormPage(
-                        //             mobileno: widget.Mobileno,
-                        //             name: widget.Name,
-                        //             pcno: Pcno,
-                        //           )),
-                        // );
+                        print("Pc No");
+                        print(Pcno);
+                        FirebaseFirestore.instance
+                            .collection("Pc No")
+                            .doc('Pc No')
+                            .set({'Pc No': c + 1});
+                        WriteData()
+                            .addPc(widget.Mobileno, Pcno, PcNumData, context)
+                            .then(
+                          (result) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Pc added"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          },
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewCustFormPage(
+                              mobileno: widget.Mobileno,
+                              name: widget.Name,
+                              pcno: Pcno!,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
