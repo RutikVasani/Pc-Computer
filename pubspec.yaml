@@ -39,9 +39,9 @@ dependencies:
   velocity_x: ^3.5.1
   open_file: ^3.2.1
   syncfusion_flutter_pdf: ^20.2.45
-  firebase_auth: ^3.8.0
-  firebase_core: ^1.22.0
-  cloud_firestore: ^3.4.8
+  firebase_auth: ^4.2.4
+  firebase_core: ^2.4.1
+  cloud_firestore: ^4.3.1
   barcode: ^2.2.3
   flutter_svg: ^1.1.5
   flutter_sms: ^2.3.3
@@ -51,7 +51,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_launcher_icons: ^0.10.0  
+  flutter_launcher_icons: ^0.11.0  
 
 flutter_icons:
   android: "launcher_icon"

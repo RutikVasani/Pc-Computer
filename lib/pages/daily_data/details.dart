@@ -119,7 +119,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                                 try {
                                                   FirebaseFirestore.instance
                                                       .collection("TodayData")
-                                                      .doc(uid)
+                                                      .doc(docTodayData["PcNo"])
                                                       .update({
                                                     "Progress": dropdownValue
                                                   }).then((_) {

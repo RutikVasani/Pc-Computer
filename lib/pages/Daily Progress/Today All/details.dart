@@ -43,6 +43,7 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                           horizontal: 15, vertical: 10),
                       child: InkWell(
                         onTap: () {
+                          print(snapshot.data!.docs.length);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

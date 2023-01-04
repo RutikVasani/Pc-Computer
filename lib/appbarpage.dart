@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/models/MobileDialog.dart';
 import 'package:pc1/pages/daily_data/details.dart';
-import 'package:pc1/pages/engineerpage.dart';
+import 'package:pc1/pages/alert.dart';
 import 'package:pc1/pages/homepage.dart';
 
 class AppBarPage extends StatefulWidget {
@@ -45,12 +45,12 @@ class _AppBarPageState extends State<AppBarPage> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.engineering),
+            icon: const Icon(Icons.add_alert),
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const EngineerPage()));
+                      builder: (context) => const AlertPage()));
             },
           ),
         ],

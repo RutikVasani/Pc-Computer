@@ -97,7 +97,7 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection("TodayData")
-                                                  .doc(uid)
+                                                  .doc(docTodayData["PcNo"])
                                                   .update({
                                                 "Progress":
                                                     docTodayData["Progress"],
