@@ -16,6 +16,7 @@ class PcNoDialogPage extends StatefulWidget {
 
 class _PcNoDialogPageState extends State<PcNoDialogPage> {
   var Pcno;
+  var Pcno1;
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +64,10 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                                   snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
                               if (snapshot.data!.docs.isNotEmpty) {
-                                int _pcno = snapshot.data!.docs.length;
                                 Map<String, dynamic> docTodayData =
                                     snapshot.data!.docs[0].data();
                                 if (docTodayData.isNotEmpty) {
-                                  Pcno = '${docTodayData["Pc No"]}';
+                                  Pcno1 = '${docTodayData["Pc No"]}';
                                   return TextFormField(
                                     initialValue: '${docTodayData["Pc No"]}',
                                     onChanged: (value) {
@@ -99,6 +99,14 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                     child: ElevatedButton(
                       child: const Text("Submit"),
                       onPressed: () {
+                        if (Pcno == null) {
+                          Pcno = int.parse(Pcno1).toString();
+                          print("Pcno");
+                          print(Pcno);
+                        } else {
+                          print("Pcno");
+                          print(Pcno);
+                        }
                         Navigator.pop(context);
                         var PcNumId = FirebaseFirestore.instance
                             .collection("Customers")
@@ -121,15 +129,24 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                             ),
                           },
                         );
-                        var c = int.parse(Pcno);
+                        var c = int.parse(Pcno1);
                         print("C + 1");
                         print(c + 1);
-                        print("Pc No");
-                        print(Pcno);
-                        FirebaseFirestore.instance
-                            .collection("Pc No")
-                            .doc('Pc No')
-                            .set({'Pc No': c + 1});
+                        print("Pc No1");
+                        print(Pcno1);
+                        if (Pcno == null || Pcno == Pcno1) {
+                          FirebaseFirestore.instance
+                              .collection("Pc No")
+                              .doc('Pc No')
+                              .set({'Pc No': c + 1});
+                          print("c + 1 Done");
+                        } else {
+                          FirebaseFirestore.instance
+                              .collection("Pc No")
+                              .doc('Pc No')
+                              .set({'Pc No': c});
+                          print("c Done");
+                        }
                         WriteData()
                             .addPc(widget.Mobileno, Pcno, PcNumData, context)
                             .then(
@@ -148,7 +165,7 @@ class _PcNoDialogPageState extends State<PcNoDialogPage> {
                             builder: (context) => NewCustFormPage(
                               mobileno: widget.Mobileno,
                               name: widget.Name,
-                              pcno: Pcno!,
+                              pcno: Pcno,
                             ),
                           ),
                         );
