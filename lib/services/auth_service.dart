@@ -19,20 +19,4 @@ class AuthService {
       );
     }
   }
-
-  Future<User?> resetpassword(String email, BuildContext context) async {
-    try {
-      var value;
-      UserCredential userCredential =
-          await FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value));
-      return userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message.toString()),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
 }

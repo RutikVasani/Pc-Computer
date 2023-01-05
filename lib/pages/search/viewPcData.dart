@@ -71,45 +71,20 @@ class _ViewPcDataPageState extends State<ViewPcDataPage> {
                               children: [
                                 const SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Cost: ",
-                                          style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          docPcNoData["Cost"],
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.grey,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      "Device: ",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Bring: ",
-                                          style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          docPcNoData["Bring Item"],
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.grey,
-                                            fontSize: 16,
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ],
+                                    Text(
+                                      docPcNoData["Item"],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -133,6 +108,48 @@ class _ViewPcDataPageState extends State<ViewPcDataPage> {
                                         color: Colors.grey,
                                         fontSize: 16,
                                       ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Cost: ",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      docPcNoData["Cost"],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Bring: ",
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Text(
+                                      docPcNoData["Bring Item"],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.grey,
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.left,
                                     ),
                                   ),
                                 ),
