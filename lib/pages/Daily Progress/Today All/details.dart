@@ -233,11 +233,35 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Name: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width/1.5,
+                                        child: Text(
+                                          docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
+                                          horizontal: 15, vertical: 5),
                                       child: Text(
                                         docTodayData["Item"],
                                         style: GoogleFonts.poppins(
@@ -263,7 +287,7 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                   width:
                                       MediaQuery.of(context).size.width / 1.1,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 10),
+                                    padding: const EdgeInsets.only(left: 15),
                                     child: Text(
                                       docTodayData["Problem"],
                                       style: GoogleFonts.poppins(

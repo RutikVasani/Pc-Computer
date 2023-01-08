@@ -20,7 +20,7 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("TodayData")
-            .orderBy('Delivered Date' , descending: true)
+            .orderBy('Delivered Date', descending: true)
             .snapshots(),
         builder:
             (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -116,11 +116,38 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Name: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.5,
+                                        child: Text(
+                                          docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
+                                          horizontal: 15, vertical: 5),
                                       child: Text(
                                         docTodayData["Item"],
                                         style: GoogleFonts.poppins(
