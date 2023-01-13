@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/models/pcnodialog.dart';
+import 'package:pc1/pages/homepage.dart';
 import 'package:pc1/pages/new_cust/newcustform.dart';
 import 'package:pc1/pages/search/viewPcData.dart';
 
@@ -24,9 +25,36 @@ class _SearchDataPageState extends State<SearchDataPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-        title: Text(widget.Mobileno,
-            style:
-                GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
+        title: Row(
+          children: [
+            Text(
+              widget.Name,
+              style: GoogleFonts.ubuntu(fontSize: 20),
+            ),
+            SizedBox(width: 5),
+            Text(
+              "(" + widget.Mobileno + ")",
+              style: GoogleFonts.ubuntu(fontSize: 20),
+            ),
+          ],
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppBarPage(),
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.keyboard_backspace,
+                size: 30,
+              )),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

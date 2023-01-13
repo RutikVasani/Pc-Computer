@@ -26,7 +26,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
   late String tempbring;
   late String _problem;
   late String _cost;
-  late String _remarks;
+  late String _remarks = "None";
   final _formKey = GlobalKey<FormState>();
   String? item;
   bool laptop = false;
@@ -757,12 +757,12 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 4,
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          initialValue: _remarks,
                           decoration: const InputDecoration(
-                            hintText: "Enter Remarks",
+                            prefixIcon: Icon(Icons.feed),
+                            labelText: 'Enter Remark',
                             border: OutlineInputBorder(),
                           ),
                           onChanged: (value) {
@@ -779,7 +779,12 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                           onTap: () async {
                             final isValid = _formKey.currentState!.validate();
                             if (!isValid) {
-                              return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Fill All Information"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
                             }
                             _formKey.currentState!.save();
                             Map<String, dynamic> ItemData = {
@@ -803,12 +808,12 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                                   .addPcData(_pcNumber, ItemData, context)
                                   .then(
                                 (result) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Item added"),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Item added"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
                                 },
                               );
                             } on FirebaseException catch (e) {

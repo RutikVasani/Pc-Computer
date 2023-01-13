@@ -74,14 +74,14 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          height: 30,
+                                          height: 25,
                                           width: 200,
                                           child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Text(
                                               'Pc No: ${docTodayData["Pc No"]}',
                                               style: GoogleFonts.ubuntu(
-                                                  fontSize: 23,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.white),
                                             ),
@@ -183,7 +183,8 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                   try {
                                                     FirebaseFirestore.instance
                                                         .collection("TodayData")
-                                                        .doc(uid)
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
                                                         .update({
                                                       "Progress": dropdownValue,
                                                       "Uid": uid
@@ -192,6 +193,24 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                           dropdownValue);
                                                       print(uid);
                                                     });
+                                                    WriteData().addprogress(
+                                                        docTodayData["Pc No"],
+                                                        dropdownValue,
+                                                        context);
+                                                    WriteData().removeprogress(
+                                                        docTodayData["Pc No"],
+                                                        "Pending",
+                                                        context);
+                                                    FirebaseFirestore.instance
+                                                        .collection("Customers")
+                                                        .doc(docTodayData[
+                                                            "Mobile No"])
+                                                        .collection("PcNumber")
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
+                                                        .collection("Data")
+                                                        .doc(uid)
+                                                        .set(docTodayData);
                                                   } on FirebaseException catch (e) {
                                                     ScaffoldMessenger.of(
                                                             context)
@@ -204,14 +223,6 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                                       ),
                                                     );
                                                   }
-                                                  WriteData().addprogress(
-                                                      docTodayData["Pc No"],
-                                                      dropdownValue,
-                                                      context);
-                                                  WriteData().removeprogress(
-                                                      docTodayData["Pc No"],
-                                                      "Pending",
-                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',
@@ -234,7 +245,8 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
                                   child: Row(
                                     children: [
                                       Text(
@@ -245,9 +257,40 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                             color: Colors.black),
                                       ),
                                       Container(
-                                        width: MediaQuery.of(context).size.width/1.5,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.7,
+                                        // color: Colors.red,
                                         child: Text(
                                           docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Mobile No: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        // color: Colors.red,
+                                        child: Text(
+                                          docTodayData["Mobile No"],
                                           style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,

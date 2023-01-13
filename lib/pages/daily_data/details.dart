@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/itemdata.dart';
-import 'package:pc1/services/writedata.dart';
 
 class ProgressPage extends StatefulWidget {
   const ProgressPage({Key? key}) : super(key: key);
@@ -12,7 +11,6 @@ class ProgressPage extends StatefulWidget {
 }
 
 class _ProgressPageState extends State<ProgressPage> {
-  String? _Progress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +34,6 @@ class _ProgressPageState extends State<ProgressPage> {
                       ),
                     );
                   }
-                  String dropdownValue = docTodayData["Progress"];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -73,14 +70,14 @@ class _ProgressPageState extends State<ProgressPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        height: 30,
+                                        height: 25,
                                         width: 200,
                                         child: Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
                                             'Pc No: ${docTodayData["Pc No"]}',
                                             style: GoogleFonts.ubuntu(
-                                                fontSize: 23,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.white),
                                           ),
@@ -101,65 +98,11 @@ class _ProgressPageState extends State<ProgressPage> {
                                                       bottomLeft:
                                                           Radius.circular(10))),
                                           child: Center(
-                                            child: DropdownButton<String>(
-                                              value: dropdownValue,
-                                              dropdownColor:
-                                                  const Color.fromARGB(
-                                                      255, 16, 121, 174),
-                                              style: GoogleFonts.poppins(
+                                            child: Text(
+                                              docTodayData["Progress"],
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 15,
                                                   color: Colors.white),
-                                              underline: const SizedBox(),
-                                              iconSize: 0,
-                                              onChanged: (String? newValue) {
-                                                setState(() {
-                                                  dropdownValue = newValue!;
-                                                });
-                                                docTodayData["Progress"] ==
-                                                    dropdownValue;
-                                                try {
-                                                  FirebaseFirestore.instance
-                                                      .collection("TodayData")
-                                                      .doc(uid)
-                                                      .update({
-                                                    "Progress": dropdownValue,
-                                                    "Uid": uid
-                                                  }).then((_) {
-                                                    print("success!" +
-                                                        dropdownValue);
-                                                    print(uid);
-                                                  });
-                                                } on FirebaseException catch (e) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          e.message.toString()),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                    ),
-                                                  );
-                                                }
-                                                WriteData().addprogress(
-                                                    docTodayData["Pc No"],
-                                                    dropdownValue,
-                                                    context);
-                                                WriteData().removeprogress(
-                                                    docTodayData["Pc No"],
-                                                    _Progress,
-                                                    context);
-                                              },
-                                              items: <String>[
-                                                'Pending',
-                                                'On Going',
-                                                'Repaired',
-                                                'Delivered',
-                                              ].map<DropdownMenuItem<String>>(
-                                                  (String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
                                             ),
                                           ),
                                         ),
@@ -182,9 +125,35 @@ class _ProgressPageState extends State<ProgressPage> {
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width /
-                                          1.5,
+                                          1.7,
                                       child: Text(
                                         docTodayData["Name"],
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Mobile No: ",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black),
+                                    ),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Text(
+                                        docTodayData["Mobile No"],
                                         style: GoogleFonts.poppins(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,

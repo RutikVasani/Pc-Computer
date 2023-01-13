@@ -73,14 +73,14 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          height: 30,
+                                          height: 25,
                                           width: 200,
                                           child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Text(
                                               'Pc No: ${docTodayData["Pc No"]}',
                                               style: GoogleFonts.ubuntu(
-                                                  fontSize: 23,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.white),
                                             ),
@@ -95,15 +95,23 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection("TodayData")
-                                                  .doc(docTodayData["PcNo"])
+                                                  .doc(docTodayData["Pc No"])
                                                   .update({
-                                                "Progress":
-                                                    docTodayData["Progress"],
+                                                "Progress": "Repaired",
+                                                "Uid": uid
                                               }).then((_) {
-                                                print("success!" +
-                                                    docTodayData["Progress"]);
+                                                print(
+                                                    "success!" + "Repaired");
                                                 print(uid);
                                               });
+                                              WriteData().addprogress(
+                                                  docTodayData["Pc No"],
+                                                  "Repaired",
+                                                  context);
+                                              WriteData().removeprogress(
+                                                  docTodayData["Pc No"],
+                                                  "On Going",
+                                                  context);
                                             } on FirebaseException catch (e) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
@@ -114,14 +122,6 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                 ),
                                               );
                                             }
-                                            WriteData().addprogress(
-                                                docTodayData["Pc No"],
-                                                "Repaired",
-                                                context);
-                                            WriteData().removeprogress(
-                                                docTodayData["Pc No"],
-                                                "On Going",
-                                                context);
                                           },
                                           icon: Container(
                                             width: 40,
@@ -172,14 +172,24 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                   try {
                                                     FirebaseFirestore.instance
                                                         .collection("TodayData")
-                                                        .doc(uid)
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
                                                         .update({
-                                                      "Progress": dropdownValue
+                                                      "Progress": dropdownValue,
+                                                      "Uid": uid
                                                     }).then((_) {
                                                       print("success!" +
                                                           dropdownValue);
                                                       print(uid);
                                                     });
+                                                    WriteData().addprogress(
+                                                        docTodayData["Pc No"],
+                                                        dropdownValue,
+                                                        context);
+                                                    WriteData().removeprogress(
+                                                        docTodayData["Pc No"],
+                                                        "On Going",
+                                                        context);
                                                   } on FirebaseException catch (e) {
                                                     ScaffoldMessenger.of(
                                                             context)
@@ -192,14 +202,6 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                       ),
                                                     );
                                                   }
-                                                  WriteData().addprogress(
-                                                      docTodayData["Pc No"],
-                                                      dropdownValue,
-                                                      context);
-                                                  WriteData().removeprogress(
-                                                      docTodayData["Pc No"],
-                                                      "On Going",
-                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',
@@ -236,9 +238,36 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.5,
+                                                1.7,
                                         child: Text(
                                           docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Mobile No: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        child: Text(
+                                          docTodayData["Mobile No"],
                                           style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,

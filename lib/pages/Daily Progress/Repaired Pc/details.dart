@@ -75,14 +75,14 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          height: 30,
+                                          height: 25,
                                           width: 200,
                                           child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Text(
                                               'Pc No: ${docTodayData["Pc No"]}',
                                               style: GoogleFonts.ubuntu(
-                                                  fontSize: 23,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.white),
                                             ),
@@ -97,15 +97,16 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection("TodayData")
-                                                  .doc(docTodayData["PcNo"])
+                                                  .doc(docTodayData["Pc No"])
                                                   .update({
                                                 "Progress":
                                                     docTodayData["Progress"],
+                                                "Uid": uid,
                                                 "Delivered Time":
                                                     DateFormat.jm()
                                                         .format(DateTime.now()),
                                                 "Delivered Date":
-                                                    DateFormat.yMEd()
+                                                    DateFormat('dd/MM/yyyy')
                                                         .format(DateTime.now())
                                               }).then((_) {
                                                 print("success!" +
@@ -128,7 +129,7 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                   .doc(docTodayData["Pc No"])
                                                   .collection("Data")
                                                   .doc(uid)
-                                                  .update(docTodayData);
+                                                  .set(docTodayData);
                                             } on FirebaseException catch (e) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
@@ -187,17 +188,32 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                   docTodayData["Progress"] ==
                                                       dropdownValue;
                                                   try {
+                                                    // FirebaseFirestore.instance
+                                                    //     .collection("TodayData")
+                                                    //     .doc(docTodayData[
+                                                    //         "Pc No"])
+                                                    //     .update({
+                                                    //   "Progress": dropdownValue,
+                                                    //   "Uid": uid
+                                                    // }).then((_) {
+                                                    //   print("success!" +
+                                                    //       dropdownValue);
+                                                    //   print(uid);
+                                                    // });
                                                     FirebaseFirestore.instance
                                                         .collection("TodayData")
-                                                        .doc(uid)
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
                                                         .update({
                                                       "Progress": dropdownValue,
+                                                      "Uid": uid,
                                                       "Delivered Time":
                                                           DateFormat.jm()
                                                               .format(DateTime
                                                                   .now()),
                                                       "Delivered Date":
-                                                          DateFormat.yMEd()
+                                                          DateFormat(
+                                                                  'dd/MM/yyyy')
                                                               .format(DateTime
                                                                   .now())
                                                     }).then((_) {
@@ -205,6 +221,14 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                           dropdownValue);
                                                       print(uid);
                                                     });
+                                                    WriteData().addprogress(
+                                                        docTodayData["Pc No"],
+                                                        dropdownValue,
+                                                        context);
+                                                    WriteData().removeprogress(
+                                                        docTodayData["Pc No"],
+                                                        "Repaired",
+                                                        context);
                                                   } on FirebaseException catch (e) {
                                                     ScaffoldMessenger.of(
                                                             context)
@@ -217,14 +241,6 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                       ),
                                                     );
                                                   }
-                                                  WriteData().addprogress(
-                                                      docTodayData["Pc No"],
-                                                      dropdownValue,
-                                                      context);
-                                                  WriteData().removeprogress(
-                                                      docTodayData["Pc No"],
-                                                      "Repaired",
-                                                      context);
                                                 },
                                                 items: <String>[
                                                   'Pending',
@@ -262,9 +278,36 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.5,
+                                                1.7,
                                         child: Text(
                                           docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Mobile No: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        child: Text(
+                                          docTodayData["Mobile No"],
                                           style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,

@@ -76,14 +76,14 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          height: 30,
+                                          height: 25,
                                           width: 200,
                                           child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Text(
                                               'Pc No: ${docTodayData["Pc No"]}',
                                               style: GoogleFonts.ubuntu(
-                                                  fontSize: 23,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.white),
                                             ),
@@ -131,9 +131,36 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.5,
+                                                1.7,
                                         child: Text(
                                           docTodayData["Name"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Mobile No: ",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        child: Text(
+                                          docTodayData["Mobile No"],
                                           style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600,

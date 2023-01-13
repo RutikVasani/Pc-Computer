@@ -27,9 +27,11 @@ class _ViewPcDataPageState extends State<ViewPcDataPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-        title: Text(widget.Pcno,
-            style:
-                GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
+        title: Text(
+          widget.Pcno,
+          style:
+              GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

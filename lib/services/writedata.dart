@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class WriteData {
   // add user
   Future<void> addCust(
-    CustId,
+    MobileNo,
     custdata,
     BuildContext context,
   ) async {
     try {
       FirebaseFirestore.instance
           .collection('Customers')
-          .doc(CustId)
+          .doc(MobileNo)
           .set(custdata);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

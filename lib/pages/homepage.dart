@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                 } else {
                                   _digit = false;
                                 }
-                                if (value.length < 5) {
+                                if (value.length < 6) {
                                   _pcno = true;
                                 } else {
                                   _pcno = false;
