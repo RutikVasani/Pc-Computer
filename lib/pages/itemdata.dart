@@ -25,9 +25,7 @@ class _ItemDataPageState extends State<ItemDataPage> {
             style:
                 GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      body: SizedBox(
         child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("TodayData")
@@ -111,6 +109,30 @@ class _ItemDataPageState extends State<ItemDataPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
+                          children: [
+                            Text(
+                              "Mobile No: ",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: Text(
+                                docItemData["Mobile No"],
+                                style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -127,85 +149,83 @@ class _ItemDataPageState extends State<ItemDataPage> {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return Expanded(
-                                        child: AlertDialog(
-                                          title: Text('Update Cost'),
-                                          content: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: TextFormField(
-                                                initialValue:
-                                                    docItemData["Cost"],
-                                                decoration:
-                                                    const InputDecoration(
-                                                  labelText: 'Cost.',
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  15))),
-                                                  prefixIcon: Icon(
-                                                      Icons.currency_rupee),
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    docItemData["Cost"] = value;
-                                                  });
-                                                },
+                                      return AlertDialog(
+                                        title: Text('Update Cost'),
+                                        content: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: TextFormField(
+                                              initialValue:
+                                                  docItemData["Cost"],
+                                              decoration:
+                                                  const InputDecoration(
+                                                labelText: 'Cost.',
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15))),
+                                                prefixIcon: Icon(
+                                                    Icons.currency_rupee),
                                               ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  docItemData["Cost"] = value;
+                                                });
+                                              },
                                             ),
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              // textColor: Colors.black,
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text('CANCEL'),
-                                            ),
-                                            TextButton(
-                                              // textColor: Colors.black,
-                                              onPressed: () {
-                                                try {
-                                                  FirebaseFirestore.instance
-                                                      .collection('TodayData')
-                                                      .doc(docItemData["Pc No"])
-                                                      .update({
-                                                    "Cost": docItemData["Cost"]
-                                                  }).then(
-                                                    (result) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                              "Cost Update"),
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                } on FirebaseException catch (e) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          e.message.toString()),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                    ),
-                                                  );
-                                                }
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text('ACCEPT'),
-                                            ),
-                                          ],
                                         ),
+                                        actions: [
+                                          TextButton(
+                                            // textColor: Colors.black,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('CANCEL'),
+                                          ),
+                                          TextButton(
+                                            // textColor: Colors.black,
+                                            onPressed: () {
+                                              try {
+                                                FirebaseFirestore.instance
+                                                    .collection('TodayData')
+                                                    .doc(docItemData["Pc No"])
+                                                    .update({
+                                                  "Cost": docItemData["Cost"]
+                                                }).then(
+                                                  (result) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            "Cost Update"),
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } on FirebaseException catch (e) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                        e.message.toString()),
+                                                    backgroundColor:
+                                                        Colors.red,
+                                                  ),
+                                                );
+                                              }
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('ACCEPT'),
+                                          ),
+                                        ],
                                       );
                                     },
                                   );
@@ -253,81 +273,79 @@ class _ItemDataPageState extends State<ItemDataPage> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Expanded(
-                                    child: AlertDialog(
-                                      title: Text('Update Bring Item'),
-                                      content: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: TextFormField(
-                                            initialValue:
-                                                docItemData["Bring Item"],
-                                            decoration: const InputDecoration(
-                                              labelText: 'Bring Item.',
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(15))),
-                                              prefixIcon:
-                                                  Icon(Icons.currency_rupee),
-                                            ),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                docItemData["Bring Item"] = value;
-                                              });
-                                            },
+                                  return AlertDialog(
+                                    title: Text('Update Bring Item'),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: TextFormField(
+                                          initialValue:
+                                              docItemData["Bring Item"],
+                                          decoration: const InputDecoration(
+                                            labelText: 'Bring Item.',
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(15))),
+                                            prefixIcon:
+                                                Icon(Icons.currency_rupee),
                                           ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              docItemData["Bring Item"] = value;
+                                            });
+                                          },
                                         ),
                                       ),
-                                      actions: [
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('CANCEL'),
-                                        ),
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            try {
-                                              FirebaseFirestore.instance
-                                                  .collection('TodayData')
-                                                  .doc(docItemData["Pc No"])
-                                                  .update({
-                                                "Bring Item":
-                                                    docItemData["Bring Item"]
-                                              }).then(
-                                                (result) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                          "Problem Bring Item"),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            } on FirebaseException catch (e) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      e.message.toString()),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                            }
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('ACCEPT'),
-                                        ),
-                                      ],
                                     ),
+                                    actions: [
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('CANCEL'),
+                                      ),
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          try {
+                                            FirebaseFirestore.instance
+                                                .collection('TodayData')
+                                                .doc(docItemData["Pc No"])
+                                                .update({
+                                              "Bring Item":
+                                                  docItemData["Bring Item"]
+                                            }).then(
+                                              (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        "Problem Bring Item"),
+                                                    backgroundColor:
+                                                        Colors.red,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } on FirebaseException catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    e.message.toString()),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
                                   );
                                 },
                               );
@@ -367,81 +385,79 @@ class _ItemDataPageState extends State<ItemDataPage> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Expanded(
-                                    child: AlertDialog(
-                                      title: Text('Update Problem'),
-                                      content: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: TextFormField(
-                                            initialValue:
-                                                docItemData["Problem"],
-                                            decoration: const InputDecoration(
-                                              labelText: 'Problem.',
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(15))),
-                                              prefixIcon:
-                                                  Icon(Icons.currency_rupee),
-                                            ),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                docItemData["Problem"] = value;
-                                              });
-                                            },
+                                  return AlertDialog(
+                                    title: Text('Update Problem'),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: TextFormField(
+                                          initialValue:
+                                              docItemData["Problem"],
+                                          decoration: const InputDecoration(
+                                            labelText: 'Problem.',
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(15))),
+                                            prefixIcon:
+                                                Icon(Icons.currency_rupee),
                                           ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              docItemData["Problem"] = value;
+                                            });
+                                          },
                                         ),
                                       ),
-                                      actions: [
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('CANCEL'),
-                                        ),
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            try {
-                                              FirebaseFirestore.instance
-                                                  .collection('TodayData')
-                                                  .doc(docItemData["Pc No"])
-                                                  .update({
-                                                "Problem":
-                                                    docItemData["Problem"]
-                                              }).then(
-                                                (result) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                          "Problem Update"),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            } on FirebaseException catch (e) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      e.message.toString()),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                            }
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('ACCEPT'),
-                                        ),
-                                      ],
                                     ),
+                                    actions: [
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('CANCEL'),
+                                      ),
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          try {
+                                            FirebaseFirestore.instance
+                                                .collection('TodayData')
+                                                .doc(docItemData["Pc No"])
+                                                .update({
+                                              "Problem":
+                                                  docItemData["Problem"]
+                                            }).then(
+                                              (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        "Problem Update"),
+                                                    backgroundColor:
+                                                        Colors.red,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } on FirebaseException catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    e.message.toString()),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
                                   );
                                 },
                               );
@@ -481,81 +497,79 @@ class _ItemDataPageState extends State<ItemDataPage> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Expanded(
-                                    child: AlertDialog(
-                                      title: Text('Update Remarks'),
-                                      content: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: TextFormField(
-                                            initialValue:
-                                                docItemData["Remarks"],
-                                            decoration: const InputDecoration(
-                                              labelText: 'Remarks.',
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(15))),
-                                              prefixIcon:
-                                                  Icon(Icons.currency_rupee),
-                                            ),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                docItemData["Remarks"] = value;
-                                              });
-                                            },
+                                  return AlertDialog(
+                                    title: Text('Update Remarks'),
+                                    content: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: TextFormField(
+                                          initialValue:
+                                              docItemData["Remarks"],
+                                          decoration: const InputDecoration(
+                                            labelText: 'Remarks.',
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(15))),
+                                            prefixIcon:
+                                                Icon(Icons.currency_rupee),
                                           ),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              docItemData["Remarks"] = value;
+                                            });
+                                          },
                                         ),
                                       ),
-                                      actions: [
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('CANCEL'),
-                                        ),
-                                        TextButton(
-                                          // textColor: Colors.black,
-                                          onPressed: () {
-                                            try {
-                                              FirebaseFirestore.instance
-                                                  .collection('TodayData')
-                                                  .doc(docItemData["Pc No"])
-                                                  .update({
-                                                "Remarks":
-                                                    docItemData["Remarks"]
-                                              }).then(
-                                                (result) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                          "Remarks Update"),
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            } on FirebaseException catch (e) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      e.message.toString()),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                            }
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('ACCEPT'),
-                                        ),
-                                      ],
                                     ),
+                                    actions: [
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('CANCEL'),
+                                      ),
+                                      TextButton(
+                                        // textColor: Colors.black,
+                                        onPressed: () {
+                                          try {
+                                            FirebaseFirestore.instance
+                                                .collection('TodayData')
+                                                .doc(docItemData["Pc No"])
+                                                .update({
+                                              "Remarks":
+                                                  docItemData["Remarks"]
+                                            }).then(
+                                              (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        "Remarks Update"),
+                                                    backgroundColor:
+                                                        Colors.red,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } on FirebaseException catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    e.message.toString()),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
                                   );
                                 },
                               );

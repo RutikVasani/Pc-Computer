@@ -87,7 +87,6 @@ class _AppBarPageState extends State<AppBarPage> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white)),
                                 );
-                            // print(snapshot.data!.docs.length);
                           }
                         }
                         return SizedBox(

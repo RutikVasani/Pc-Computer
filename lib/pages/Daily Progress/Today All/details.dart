@@ -248,25 +248,48 @@ class _AllPcDetailsState extends State<AllPcDetails> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        "Name: ",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Name: ",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.9,
+                                            // color: Colors.red,
+                                            child: Text(
+                                              docTodayData["Name"],
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.7,
-                                        // color: Colors.red,
-                                        child: Text(
-                                          docTodayData["Name"],
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.grey),
+                                      IconButton(
+                                        onPressed: () {
+                                          FirebaseFirestore.instance
+                                              .collection("TodayData")
+                                              .doc(docTodayData["Pc No"])
+                                              .delete();
+                                          FirebaseFirestore.instance
+                                              .collection("Pending")
+                                              .doc(docTodayData["Pc No"])
+                                              .delete();
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          size: 30,
                                         ),
                                       ),
                                     ],
