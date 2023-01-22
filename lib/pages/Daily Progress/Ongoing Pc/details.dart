@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/itemdata.dart';
 import 'package:pc1/services/writedata.dart';
@@ -98,10 +99,16 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                   .doc(docTodayData["Pc No"])
                                                   .update({
                                                 "Progress": "Repaired",
-                                                "Uid": uid
+                                                "Uid": uid,
+                                                "Delivered Time":
+                                                    DateFormat.jm()
+                                                        .format(DateTime.now()),
+                                                "Delivered Now": DateTime.now(),
+                                                "Delivered Date":
+                                                    DateFormat('dd/MM/yyyy')
+                                                        .format(DateTime.now())
                                               }).then((_) {
-                                                print(
-                                                    "success!" + "Repaired");
+                                                print("success!" + "Repaired");
                                                 print(uid);
                                               });
                                               WriteData().addprogress(
@@ -176,7 +183,18 @@ class _OnGoingPcDatailsState extends State<OnGoingPcDatails> {
                                                             "Pc No"])
                                                         .update({
                                                       "Progress": dropdownValue,
-                                                      "Uid": uid
+                                                      "Uid": uid,
+                                                      "Delivered Time":
+                                                          DateFormat.jm()
+                                                              .format(DateTime
+                                                                  .now()),
+                                                      "Delivered Now":
+                                                          DateTime.now(),
+                                                      "Delivered Date":
+                                                          DateFormat(
+                                                                  'dd/MM/yyyy')
+                                                              .format(DateTime
+                                                                  .now())
                                                     }).then((_) {
                                                       print("success!" +
                                                           dropdownValue);

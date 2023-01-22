@@ -105,6 +105,7 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                 "Delivered Time":
                                                     DateFormat.jm()
                                                         .format(DateTime.now()),
+                                                "Delivered Now": DateTime.now(),
                                                 "Delivered Date":
                                                     DateFormat('dd/MM/yyyy')
                                                         .format(DateTime.now())
@@ -211,6 +212,8 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                                           DateFormat.jm()
                                                               .format(DateTime
                                                                   .now()),
+                                                      "Delivered Now":
+                                                          DateTime.now(),
                                                       "Delivered Date":
                                                           DateFormat(
                                                                   'dd/MM/yyyy')

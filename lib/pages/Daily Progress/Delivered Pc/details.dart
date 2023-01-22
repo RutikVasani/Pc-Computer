@@ -20,7 +20,8 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("TodayData")
-            .orderBy('Delivered Date', descending: true)
+            .orderBy('Delivered Now', descending: true)
+            // .orderBy('Delivered Time', descending: true)
             .snapshots(),
         builder:
             (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {

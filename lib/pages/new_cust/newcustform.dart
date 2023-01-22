@@ -484,7 +484,7 @@ class _NewCustFormPageState extends State<NewCustFormPage> {
                                               is_checked2 = value!;
                                               if (is_checked2 == true) {
                                                 _bringWithItem.add("Cartridz");
-                                              }
+                                              } else
                                               _bringWithItem.remove("Cartridz");
                                             });
                                           }),

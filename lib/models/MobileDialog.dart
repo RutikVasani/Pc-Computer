@@ -47,6 +47,8 @@ class _MobileNoDialogPageState extends State<MobileNoDialogPage> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextField(
+                      autofocus: true,
+                      autocorrect: true,
                       decoration: const InputDecoration(
                         labelText: 'Name',
                         border: OutlineInputBorder(
