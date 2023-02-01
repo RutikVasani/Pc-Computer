@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "362738188855",
-    "project_id": "pc-computer-1ac53",
-    "storage_bucket": "pc-computer-1ac53.appspot.com"
+    "project_number": "964555819422",
+    "project_id": "pc-computer-5758",
+    "storage_bucket": "pc-computer-5758.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:362738188855:android:a04bfccd4afb9e7ba1f5b2",
+        "mobilesdk_app_id": "1:964555819422:android:08672bf087ee79e721ae8f",
         "android_client_info": {
-          "package_name": "com.pccomputer.pc1"
+          "package_name": "com.pccomputer.PcComputer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "362738188855-nltjtbnag432740bjpsvs9kslut0rref.apps.googleusercontent.com",
+          "client_id": "964555819422-lo6eqg6fkhi61queh0c7so3gphkdjp1b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC3tf04W_uu0uxMcVD4OwhW3YcAweYr6TQ"
+          "current_key": "AIzaSyAFmix6kGr4D1wZNnQ5fdNZEBhKUy2V4fI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "362738188855-nltjtbnag432740bjpsvs9kslut0rref.apps.googleusercontent.com",
+              "client_id": "964555819422-lo6eqg6fkhi61queh0c7so3gphkdjp1b.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

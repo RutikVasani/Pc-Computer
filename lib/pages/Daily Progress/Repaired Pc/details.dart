@@ -20,7 +20,9 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 211, 244, 247),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("TodayData").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("TodayData")
+            .orderBy('Delivered Now', descending: true).snapshots(),
         builder:
             (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
