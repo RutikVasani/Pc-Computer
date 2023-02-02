@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 import 'package:pc1/pages/itemdata.dart';
+import 'package:pc1/services/writedata.dart';
 
 class DeliveredPcDatails extends StatefulWidget {
   const DeliveredPcDatails({Key? key}) : super(key: key);
@@ -106,11 +107,80 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                                             Radius.circular(
                                                                 10))),
                                             child: Center(
-                                                child: Text(
-                                              "Delivered",
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white),
-                                            )),
+                                              child: DropdownButton<String>(
+                                                value: dropdownValue,
+                                                dropdownColor:
+                                                    const Color.fromARGB(
+                                                        255, 16, 121, 174),
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.white),
+                                                underline: const SizedBox(),
+                                                iconSize: 0,
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    dropdownValue = newValue!;
+                                                  });
+                                                  docTodayData["Progress"] ==
+                                                      dropdownValue;
+                                                  try {
+                                                    FirebaseFirestore.instance
+                                                        .collection("TodayData")
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
+                                                        .update({
+                                                      "Progress": dropdownValue,
+                                                      "Uid": uid
+                                                    }).then((_) {
+                                                      print("success!" +
+                                                          dropdownValue);
+                                                      print(uid);
+                                                    });
+                                                    WriteData().addprogress(
+                                                        docTodayData["Pc No"],
+                                                        dropdownValue,
+                                                        context);
+                                                    WriteData().removeprogress(
+                                                        docTodayData["Pc No"],
+                                                        "Pending",
+                                                        context);
+                                                    FirebaseFirestore.instance
+                                                        .collection("Customers")
+                                                        .doc(docTodayData[
+                                                            "Mobile No"])
+                                                        .collection("PcNumber")
+                                                        .doc(docTodayData[
+                                                            "Pc No"])
+                                                        .collection("Data")
+                                                        .doc(uid)
+                                                        .set(docTodayData);
+                                                  } on FirebaseException catch (e) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(e.message
+                                                            .toString()),
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                items: <String>[
+                                                  'Pending',
+                                                  'On Going',
+                                                  'Repaired',
+                                                  'Delivered',
+                                                ].map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],

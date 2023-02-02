@@ -5,6 +5,8 @@ import 'package:pc1/models/MobileDialog.dart';
 import 'package:pc1/pages/daily_data/details.dart';
 import 'package:pc1/pages/alert/alert.dart';
 import 'package:pc1/pages/homepage.dart';
+import 'package:pc1/pages/search/pcno.dart';
+import 'package:pc1/pages/settings/settings.dart';
 
 class AppBarPage extends StatefulWidget {
   const AppBarPage({Key? key}) : super(key: key);
@@ -27,14 +29,14 @@ class _AppBarPageState extends State<AppBarPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
-        title: Text('PC Computer',
+        title: Text('Pc Computer',
             style:
-                GoogleFonts.ubuntu(fontSize: 25, fontWeight: FontWeight.bold)),
+                GoogleFonts.ubuntu(fontSize: 20, fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(
               Icons.add,
-              size: 30,
+              size: 25,
             ),
             onPressed: () {
               Navigator.push(
@@ -45,10 +47,26 @@ class _AppBarPageState extends State<AppBarPage> {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              size: 25,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PcNoSearchPage(),
+                ),
+              );
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              decoration: BoxDecoration(color: Colors.blue.shade200, borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(
+                  color: Colors.blue.shade200,
+                  borderRadius: BorderRadius.circular(10)),
               child: Row(
                 children: [
                   IconButton(
@@ -80,13 +98,13 @@ class _AppBarPageState extends State<AppBarPage> {
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white))
                                 : Padding(
-                                  padding: const EdgeInsets.only(right: 5),
-                                  child: Text('${_alertItem}',
-                                      style: GoogleFonts.ubuntu(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                );
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: Text('${_alertItem}',
+                                        style: GoogleFonts.ubuntu(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                  );
                           }
                         }
                         return SizedBox(
@@ -105,11 +123,18 @@ class _AppBarPageState extends State<AppBarPage> {
           padding: const EdgeInsets.only(left: 10, top: 5, bottom: 12),
           child: IconButton(
             icon: const Icon(
-              Icons.logout,
+              Icons.settings,
               color: Colors.white,
-              size: 30,
+              size: 28,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsPage(),
+                ),
+              );
+            },
           ),
         ),
       ),
