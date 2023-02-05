@@ -5,6 +5,7 @@ import 'package:pc1/appbarpage.dart';
 import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 import 'package:pc1/pages/itemdata.dart';
 import 'package:pc1/services/writedata.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeliveredPcDatails extends StatefulWidget {
   const DeliveredPcDatails({Key? key}) : super(key: key);
@@ -337,6 +338,139 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                                 color: Colors.grey),
                                           ),
                                         ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                String mobileno =
+                                                    docTodayData["Mobile No"];
+                                                String message = "Dear Customer, " +
+                                                    docTodayData["Name"] +
+                                                    ',\n your ' +
+                                                    docTodayData["Item"] +
+                                                    ", Pc No " +
+                                                    docTodayData["Pc No"] +
+                                                    " has Delivered and charge of it is " +
+                                                    docTodayData["Cost"] +
+                                                    ", Thank you for contect us,\n Pc Computer.";
+                                                final Uri whatsapp = Uri.parse(
+                                                    'whatsapp://send/?phone=$mobileno&text=$message');
+
+                                                // ignore: deprecated_member_use
+                                                await launchUrl(whatsapp);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.green.shade900,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Whatsapp",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                String mobileno =
+                                                    docTodayData["Mobile No"];
+                                                final Uri call = Uri(
+                                                    scheme: 'tel',
+                                                    path: mobileno);
+                                                // ignore: deprecated_member_use
+                                                if (await canLaunch(
+                                                    call.toString())) {
+                                                  // ignore: deprecated_member_use
+                                                  await launch(call.toString());
+                                                } else {
+                                                  print("no action");
+                                                }
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Call",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                String mobileno =
+                                                    docTodayData["Mobile No"];
+                                                String message = "Dear Customer, " +
+                                                    docTodayData["Name"] +
+                                                    ',\n your ' +
+                                                    docTodayData["Item"] +
+                                                    ", Pc No " +
+                                                    docTodayData["Pc No"] +
+                                                    " has Delivered and charge of it is " +
+                                                    docTodayData["Cost"] +
+                                                    ", Thank you for contect us,\n Pc Computer.";
+                                                // final Uri sms = Uri.parse(
+                                                //     'sms:$mobileno?body=$message');
+                                                final String smsandroid =
+                                                    'sms:$mobileno?body=$message';
+                                                // ignore: deprecated_member_use
+                                                if (await canLaunch(
+                                                    smsandroid)) {
+                                                  // ignore: deprecated_member_use
+                                                  await launch(smsandroid);
+                                                } else {
+                                                  throw 'Could not launch';
+                                                }
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Center(
+                                                  child: Text(
+                                                    "Sms",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
