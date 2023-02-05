@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pc1/pages/invoice/pdf/pdfdata.dart';
 import 'package:pc1/pages/itemdata.dart';
 import 'package:pc1/services/writedata.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchDeliveredPage extends StatefulWidget {
   const SearchDeliveredPage({super.key});
@@ -15,7 +16,6 @@ class SearchDeliveredPage extends StatefulWidget {
 class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
   String Mobileno = "";
   String SearchValue = "";
-  bool _digit = false;
   bool _search = true;
   bool _pcno = true;
 
@@ -26,6 +26,7 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
         title: TextField(
+          autofocus: true,
           onChanged: (value) {
             setState(
               () {
@@ -34,11 +35,6 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                   _search = true;
                 } else {
                   _search = false;
-                }
-                if (value.length == 10) {
-                  _digit = true;
-                } else {
-                  _digit = false;
                 }
                 if (value.length < 6) {
                   _pcno = true;
@@ -64,11 +60,11 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
               ? SingleChildScrollView(
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
-                    child: StreamBuilder(
+                    child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('TodayData')
                           .snapshots(),
-                      builder: (__, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                      builder: (context, snapshot) {
                         if (SearchValue != "") {
                           return (snapshot.connectionState ==
                                   ConnectionState.waiting)
@@ -77,19 +73,19 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                 )
                               : ListView.builder(
                                   itemCount: snapshot.data!.docs.length,
-                                  itemBuilder: (___, int index) {
-                                    Map<String, dynamic> docTodayData =
-                                        snapshot.data!.docs[index].data();
+                                  itemBuilder: (contest, index) {
+                                    var docTodayData =
+                                        snapshot.data!.docs[index].data()
+                                            as Map<String, dynamic>;
                                     String uid = snapshot.data!.docs[index].id;
-                                    if (docTodayData.isEmpty) {
-                                      return const SizedBox(
-                                        child: Center(
-                                          child: Text("Document is Empty"),
-                                        ),
-                                      );
-                                    }
+
                                     if (docTodayData["Progress"] ==
-                                        "Delivered") {
+                                            "Delivered" &&
+                                        docTodayData['Pc No']
+                                            .toString()
+                                            .toLowerCase()
+                                            .contains(
+                                                SearchValue.toLowerCase())) {
                                       String dropdownValue = 'Delivered';
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -508,6 +504,181 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                                                       .grey),
                                                             ),
                                                           ],
+                                                        ),
+                                                        SizedBox(height: 10),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  String message = "Dear Customer, " +
+                                                                      docTodayData[
+                                                                          "Name"] +
+                                                                      ',\n your ' +
+                                                                      docTodayData[
+                                                                          "Item"] +
+                                                                      ", Pc No " +
+                                                                      docTodayData[
+                                                                          "Pc No"] +
+                                                                      " has Delivered and charge of it is " +
+                                                                      docTodayData[
+                                                                          "Cost"] +
+                                                                      ", Thank you for contect us,\n Pc Computer.";
+                                                                  final Uri
+                                                                      whatsapp =
+                                                                      Uri.parse(
+                                                                          'whatsapp://send/?phone=$mobileno&text=$message');
+
+                                                                  // ignore: deprecated_member_use
+                                                                  await launchUrl(
+                                                                      whatsapp);
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .green
+                                                                          .shade900,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Whatsapp",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  final Uri call = Uri(
+                                                                      scheme:
+                                                                          'tel',
+                                                                      path:
+                                                                          mobileno);
+                                                                  // ignore: deprecated_member_use
+                                                                  if (await canLaunch(
+                                                                      call.toString())) {
+                                                                    // ignore: deprecated_member_use
+                                                                    await launch(
+                                                                        call.toString());
+                                                                  } else {
+                                                                    print(
+                                                                        "no action");
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .green,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Call",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  String message = "Dear Customer, " +
+                                                                      docTodayData[
+                                                                          "Name"] +
+                                                                      ',\n your ' +
+                                                                      docTodayData[
+                                                                          "Item"] +
+                                                                      ", Pc No " +
+                                                                      docTodayData[
+                                                                          "Pc No"] +
+                                                                      " has Delivered and charge of it is " +
+                                                                      docTodayData[
+                                                                          "Cost"] +
+                                                                      ", Thank you for contect us,\n Pc Computer.";
+                                                                  // final Uri sms = Uri.parse(
+                                                                  //     'sms:$mobileno?body=$message');
+                                                                  final String
+                                                                      smsandroid =
+                                                                      'sms:$mobileno?body=$message';
+                                                                  // ignore: deprecated_member_use
+                                                                  if (await canLaunch(
+                                                                      smsandroid)) {
+                                                                    // ignore: deprecated_member_use
+                                                                    await launch(
+                                                                        smsandroid);
+                                                                  } else {
+                                                                    throw 'Could not launch';
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .blue,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Sms",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -533,15 +704,11 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
               : SingleChildScrollView(
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
-                    child: StreamBuilder(
+                    child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
-                          .collection("TodayData")
-                          .orderBy('Delivered Now', descending: true)
-                          // .orderBy('Delivered Time', descending: true)
+                          .collection('TodayData')
                           .snapshots(),
-                      builder: (__,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
+                      builder: (context, snapshot) {
                         if (SearchValue != "") {
                           return (snapshot.connectionState ==
                                   ConnectionState.waiting)
@@ -550,19 +717,19 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                 )
                               : ListView.builder(
                                   itemCount: snapshot.data!.docs.length,
-                                  itemBuilder: (___, int index) {
-                                    Map<String, dynamic> docTodayData =
-                                        snapshot.data!.docs[index].data();
+                                  itemBuilder: (contest, index) {
+                                    var docTodayData =
+                                        snapshot.data!.docs[index].data()
+                                            as Map<String, dynamic>;
                                     String uid = snapshot.data!.docs[index].id;
-                                    if (docTodayData.isEmpty) {
-                                      return const SizedBox(
-                                        child: Center(
-                                          child: Text("Document is Empty"),
-                                        ),
-                                      );
-                                    }
+
                                     if (docTodayData["Progress"] ==
-                                        "Delivered") {
+                                            "Delivered" &&
+                                        docTodayData['Mobile No']
+                                            .toString()
+                                            .toLowerCase()
+                                            .contains(
+                                                SearchValue.toLowerCase())) {
                                       String dropdownValue = 'Delivered';
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -981,6 +1148,181 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                                                       .grey),
                                                             ),
                                                           ],
+                                                        ),
+                                                        SizedBox(height: 10),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  String message = "Dear Customer, " +
+                                                                      docTodayData[
+                                                                          "Name"] +
+                                                                      ',\n your ' +
+                                                                      docTodayData[
+                                                                          "Item"] +
+                                                                      ", Pc No " +
+                                                                      docTodayData[
+                                                                          "Pc No"] +
+                                                                      " has Delivered and charge of it is " +
+                                                                      docTodayData[
+                                                                          "Cost"] +
+                                                                      ", Thank you for contect us,\n Pc Computer.";
+                                                                  final Uri
+                                                                      whatsapp =
+                                                                      Uri.parse(
+                                                                          'whatsapp://send/?phone=$mobileno&text=$message');
+
+                                                                  // ignore: deprecated_member_use
+                                                                  await launchUrl(
+                                                                      whatsapp);
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .green
+                                                                          .shade900,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Whatsapp",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  final Uri call = Uri(
+                                                                      scheme:
+                                                                          'tel',
+                                                                      path:
+                                                                          mobileno);
+                                                                  // ignore: deprecated_member_use
+                                                                  if (await canLaunch(
+                                                                      call.toString())) {
+                                                                    // ignore: deprecated_member_use
+                                                                    await launch(
+                                                                        call.toString());
+                                                                  } else {
+                                                                    print(
+                                                                        "no action");
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .green,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Call",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  String
+                                                                      mobileno =
+                                                                      docTodayData[
+                                                                          "Mobile No"];
+                                                                  String message = "Dear Customer, " +
+                                                                      docTodayData[
+                                                                          "Name"] +
+                                                                      ',\n your ' +
+                                                                      docTodayData[
+                                                                          "Item"] +
+                                                                      ", Pc No " +
+                                                                      docTodayData[
+                                                                          "Pc No"] +
+                                                                      " has Delivered and charge of it is " +
+                                                                      docTodayData[
+                                                                          "Cost"] +
+                                                                      ", Thank you for contect us,\n Pc Computer.";
+                                                                  // final Uri sms = Uri.parse(
+                                                                  //     'sms:$mobileno?body=$message');
+                                                                  final String
+                                                                      smsandroid =
+                                                                      'sms:$mobileno?body=$message';
+                                                                  // ignore: deprecated_member_use
+                                                                  if (await canLaunch(
+                                                                      smsandroid)) {
+                                                                    // ignore: deprecated_member_use
+                                                                    await launch(
+                                                                        smsandroid);
+                                                                  } else {
+                                                                    throw 'Could not launch';
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      4,
+                                                                  height: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                          .blue,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "Sms",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ],
                                                     ),

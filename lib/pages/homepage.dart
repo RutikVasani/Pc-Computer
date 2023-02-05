@@ -941,7 +941,7 @@ class _HomePageState extends State<HomePage> {
                                                     : Text('${_pendingItem}',
                                                         style:
                                                             GoogleFonts.ubuntu(
-                                                                fontSize: 25,
+                                                                fontSize: 20,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,

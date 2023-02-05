@@ -12,7 +12,6 @@ class PcNoSearchPage extends StatefulWidget {
 class _PcNoSearchPageState extends State<PcNoSearchPage> {
   String Mobileno = "";
   String SearchValue = "";
-  bool _digit = false;
   bool _search = true;
   bool _pcno = true;
 
@@ -23,6 +22,7 @@ class _PcNoSearchPageState extends State<PcNoSearchPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 16, 121, 174),
         title: TextField(
+          autofocus: true,
           onChanged: (value) {
             setState(
               () {
@@ -31,11 +31,6 @@ class _PcNoSearchPageState extends State<PcNoSearchPage> {
                   _search = true;
                 } else {
                   _search = false;
-                }
-                if (value.length == 10) {
-                  _digit = true;
-                } else {
-                  _digit = false;
                 }
                 if (value.length < 6) {
                   _pcno = true;
@@ -79,6 +74,7 @@ class _PcNoSearchPageState extends State<PcNoSearchPage> {
                                         .data() as Map<String, dynamic>;
                                     if (data['Pc No']
                                         .toString()
+                                        .toLowerCase()
                                         .contains(SearchValue.toLowerCase())) {
                                       return InkWell(
                                         onTap: () {},
@@ -160,8 +156,9 @@ class _PcNoSearchPageState extends State<PcNoSearchPage> {
                                   itemBuilder: (context, index1) {
                                     var data = snapshot.data!.docs[index1]
                                         .data() as Map<String, dynamic>;
-                                    if (data['Pc No']
+                                    if (data['Mobile No']
                                         .toString()
+                                        .toLowerCase()
                                         .contains(SearchValue.toLowerCase())) {
                                       return InkWell(
                                         onTap: () {},
