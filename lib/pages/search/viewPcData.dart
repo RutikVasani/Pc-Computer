@@ -75,6 +75,42 @@ class _ViewPcDataPageState extends State<ViewPcDataPage> {
                                 Row(
                                   children: [
                                     Text(
+                                      "Name: ",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      docPcNoData["Name"],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Mobile No: ",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      docPcNoData["Mobile No"],
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
                                       "Device: ",
                                       style: GoogleFonts.poppins(
                                           color: Colors.black,

@@ -70,7 +70,7 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            'Pc No: ${docTodayData["Pc No"]}',
+                                            'Pc No: ${docTodayData["Old Pc No"]}',
                                             style: GoogleFonts.ubuntu(
                                                 fontSize: 23,
                                                 fontWeight: FontWeight.w600,
@@ -88,11 +88,13 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                                 onPressed: () {
                                                   FirebaseFirestore.instance
                                                       .collection("TodayData")
-                                                      .doc(
-                                                          docTodayData["Pc No"])
+                                                      .doc(docTodayData[
+                                                          "Old Pc No"])
                                                       .update({
                                                     "Progress": docTodayData[
                                                         "Progress"],
+                                                    "Pc No":
+                                                        docTodayData["Pc No"],
                                                     "Problem":
                                                         docTodayData["Problem"],
                                                     "Cost":
@@ -102,8 +104,8 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                                   });
                                                   FirebaseFirestore.instance
                                                       .collection("Alert")
-                                                      .doc(
-                                                          docTodayData["Pc No"])
+                                                      .doc(docTodayData[
+                                                          "Old Pc No"])
                                                       .delete();
                                                   Navigator.pop(context);
                                                 },
@@ -127,16 +129,16 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                                 onPressed: () {
                                                   FirebaseFirestore.instance
                                                       .collection("TodayData")
-                                                      .doc(
-                                                          docTodayData["Pc No"])
+                                                      .doc(docTodayData[
+                                                          "Old Pc No"])
                                                       .update({
                                                     "Progress":
                                                         docTodayData["Progress"]
                                                   });
                                                   FirebaseFirestore.instance
                                                       .collection("Alert")
-                                                      .doc(
-                                                          docTodayData["Pc No"])
+                                                      .doc(docTodayData[
+                                                          "Old Pc No"])
                                                       .delete();
                                                   Navigator.pop(context);
                                                 },
@@ -236,7 +238,7 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(
-                                  docTodayData["Problem"],
+                                  docTodayData["Old Problem"],
                                   style: GoogleFonts.poppins(
                                       fontSize: 18, color: Colors.grey),
                                 ),
@@ -263,7 +265,7 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                         color: Colors.black),
                                   ),
                                   Text(
-                                    docTodayData["Cost"],
+                                    docTodayData["Old Cost"],
                                     style: GoogleFonts.poppins(
                                         fontSize: 18, color: Colors.grey),
                                   ),
@@ -296,13 +298,145 @@ class _ShowAlertDataPageState extends State<ShowAlertDataPage> {
                                 padding:
                                     const EdgeInsets.only(left: 15, top: 3),
                                 child: Text(
-                                  docTodayData["Remarks"],
+                                  docTodayData["Old Remarks"],
                                   style: GoogleFonts.poppins(
                                       fontSize: 18, color: Colors.grey),
                                 ),
                               ),
                             ),
                             const SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  children: [
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 15, top: 7),
+                                        child: Text(
+                                          "Change Pc No",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.1,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          docTodayData["Pc No"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 15, top: 7),
+                                        child: Text(
+                                          "Change Problem",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.3,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          docTodayData["Problem"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      child: Divider(
+                                        thickness: 2,
+                                        height: 2,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 7),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Change Cost: ",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black),
+                                          ),
+                                          Text(
+                                            docTodayData["Cost"],
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 18,
+                                                color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      child: Divider(
+                                        thickness: 2,
+                                        height: 2,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: 15, top: 7),
+                                        child: Text(
+                                          "Change Remarks: ",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.3,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15, top: 3),
+                                        child: Text(
+                                          docTodayData["Remarks"],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
                           ],
                         )),
                   );

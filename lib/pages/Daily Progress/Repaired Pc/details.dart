@@ -382,9 +382,9 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                               docTodayData["Item"] +
                                               ", Pc No " +
                                               docTodayData["Pc No"] +
-                                              " has Delivered and charge of it is " +
+                                              " has Repaired and charge of it is Rs." +
                                               docTodayData["Cost"] +
-                                              ", Please Collect it from Pc Computer,\nThank you for contect us,\n Pc Computer.";
+                                              "/-, Please Collect it from Pc Computer,\nThank you for contect us,\n Pc Computer.";
                                           final Uri whatsapp = Uri.parse(
                                               'whatsapp://send/?phone=$mobileno&text=$message');
 
@@ -454,9 +454,9 @@ class _RepairedPcDatailsState extends State<RepairedPcDatails> {
                                               docTodayData["Item"] +
                                               ", Pc No " +
                                               docTodayData["Pc No"] +
-                                              " has Repaired and charge of it is " +
+                                              " has Repaired and charge of it is Rs." +
                                               docTodayData["Cost"] +
-                                              ", Please Collect it from Pc Computer,\nThank you for contect us,\n Pc Computer.";
+                                              "/-, Please Collect it from Pc Computer,\nThank you for contect us,\n Pc Computer.";
                                           // final Uri sms = Uri.parse(
                                           //     'sms:$mobileno?body=$message');
                                           final String smsandroid =

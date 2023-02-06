@@ -445,7 +445,7 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                                             context,
                                                             MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  const PdfDataPage(),
+                                                                  PdfDataPage(pcno: docTodayData["Pc No"],),
                                                             ),
                                                           );
                                                         },
@@ -1089,7 +1089,7 @@ class _SearchDeliveredPageState extends State<SearchDeliveredPage> {
                                                             context,
                                                             MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  const PdfDataPage(),
+                                                                  PdfDataPage(pcno: docTodayData["Pc No"],),
                                                             ),
                                                           );
                                                         },

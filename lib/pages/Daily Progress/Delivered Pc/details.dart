@@ -242,234 +242,179 @@ class _DeliveredPcDatailsState extends State<DeliveredPcDatails> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 5),
-                                      child: Text(
-                                        docTodayData["Item"],
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: Text(
-                                        docTodayData["Cost"],
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.3,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          docTodayData["Problem"],
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.grey),
-                                        ),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const PdfDataPage(),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.picture_as_pdf,
-                                        color: Colors.black,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 15),
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: const Text(
-                                          "Delivered:",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            docTodayData["Delivered Time"] +
-                                                ", " as String,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey),
-                                          ),
-                                          Text(
-                                            docTodayData["Delivered Date"]
-                                                as String,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
                                           children: [
-                                            InkWell(
-                                              onTap: () async {
-                                                String mobileno =
-                                                    docTodayData["Mobile No"];
-                                                String message = "Dear Customer, " +
-                                                    docTodayData["Name"] +
-                                                    ',\n your ' +
-                                                    docTodayData["Item"] +
-                                                    ", Pc No " +
-                                                    docTodayData["Pc No"] +
-                                                    " has Delivered and charge of it is " +
-                                                    docTodayData["Cost"] +
-                                                    ", Thank you for contect us,\n Pc Computer.";
-                                                final Uri whatsapp = Uri.parse(
-                                                    'whatsapp://send/?phone=$mobileno&text=$message');
-
-                                                // ignore: deprecated_member_use
-                                                await launchUrl(whatsapp);
-                                              },
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                        Colors.green.shade900,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Whatsapp",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
+                                            const Text(
+                                              "Delivered:",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
                                             ),
-                                            InkWell(
-                                              onTap: () async {
-                                                String mobileno =
-                                                    docTodayData["Mobile No"];
-                                                final Uri call = Uri(
-                                                    scheme: 'tel',
-                                                    path: mobileno);
-                                                // ignore: deprecated_member_use
-                                                if (await canLaunch(
-                                                    call.toString())) {
-                                                  // ignore: deprecated_member_use
-                                                  await launch(call.toString());
-                                                } else {
-                                                  print("no action");
-                                                }
-                                              },
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Call",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
+                                            Text(
+                                              docTodayData["Delivered Time"] +
+                                                  ", " as String,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey),
                                             ),
-                                            InkWell(
-                                              onTap: () async {
-                                                String mobileno =
-                                                    docTodayData["Mobile No"];
-                                                String message = "Dear Customer, " +
-                                                    docTodayData["Name"] +
-                                                    ',\n your ' +
-                                                    docTodayData["Item"] +
-                                                    ", Pc No " +
-                                                    docTodayData["Pc No"] +
-                                                    " has Delivered and charge of it is " +
-                                                    docTodayData["Cost"] +
-                                                    ", Thank you for contect us,\n Pc Computer.";
-                                                // final Uri sms = Uri.parse(
-                                                //     'sms:$mobileno?body=$message');
-                                                final String smsandroid =
-                                                    'sms:$mobileno?body=$message';
-                                                // ignore: deprecated_member_use
-                                                if (await canLaunch(
-                                                    smsandroid)) {
-                                                  // ignore: deprecated_member_use
-                                                  await launch(smsandroid);
-                                                } else {
-                                                  throw 'Could not launch';
-                                                }
-                                              },
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Sms",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
+                                            Text(
+                                              docTodayData["Delivered Date"]
+                                                  as String,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey),
                                             ),
                                           ],
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PdfDataPage(pcno: docTodayData["Pc No"],),
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            Icons.picture_as_pdf,
+                                            color: Colors.black,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          String mobileno =
+                                              docTodayData["Mobile No"];
+                                          String message = "Dear Customer, " +
+                                              docTodayData["Name"] +
+                                              ',\n your ' +
+                                              docTodayData["Item"] +
+                                              ", Pc No " +
+                                              docTodayData["Pc No"] +
+                                              " has Delivered and charge of it is Rs." +
+                                              docTodayData["Cost"] +
+                                              "/-, Thank you for contect us,\n Pc Computer.";
+                                          final Uri whatsapp = Uri.parse(
+                                              'whatsapp://send/?phone=$mobileno&text=$message');
+
+                                          // ignore: deprecated_member_use
+                                          await launchUrl(whatsapp);
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green.shade900,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Center(
+                                            child: Text(
+                                              "Whatsapp",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          String mobileno =
+                                              docTodayData["Mobile No"];
+                                          final Uri call = Uri(
+                                              scheme: 'tel', path: mobileno);
+                                          // ignore: deprecated_member_use
+                                          if (await canLaunch(
+                                              call.toString())) {
+                                            // ignore: deprecated_member_use
+                                            await launch(call.toString());
+                                          } else {
+                                            print("no action");
+                                          }
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Center(
+                                            child: Text(
+                                              "Call",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          String mobileno =
+                                              docTodayData["Mobile No"];
+                                          String message = "Dear Customer, " +
+                                              docTodayData["Name"] +
+                                              ',\n your ' +
+                                              docTodayData["Item"] +
+                                              ", Pc No " +
+                                              docTodayData["Pc No"] +
+                                              " has Delivered and charge of it is Rs." +
+                                              docTodayData["Cost"] +
+                                              "/-, Thank you for contect us,\n Pc Computer.";
+                                          final String smsandroid =
+                                              'sms:$mobileno?body=$message';
+                                          // ignore: deprecated_member_use
+                                          if (await canLaunch(smsandroid)) {
+                                            // ignore: deprecated_member_use
+                                            await launch(smsandroid);
+                                          } else {
+                                            throw 'Could not launch';
+                                          }
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Center(
+                                            child: Text(
+                                              "Sms",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
